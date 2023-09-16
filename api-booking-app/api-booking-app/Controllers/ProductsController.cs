@@ -31,10 +31,10 @@ namespace Booking_App_WebApi.Controllers
                 case 0:
                     break;
                 case 1:
-                    sortqr = sortqr.Ascending(x => x.PricePerHour);
+                    sortqr = Builders<Product>.Sort.Ascending(x => x.PricePerHour);
                     break;
                 case 2:
-                    sortqr = sortqr.Descending(x => x.PricePerHour);
+                    sortqr = Builders<Product>.Sort.Descending(x => x.PricePerHour);
                     break;
                 default:
                     break;
@@ -46,7 +46,7 @@ namespace Booking_App_WebApi.Controllers
                 Sort = sortqr
             };
 
-            var product = _booksService._productsCollection.Find(x => x.Name.Contains(key)).ToList();
+            var product = _booksService._productsCollection.FindAsync(x => x.Name.Contains(key),options).Result.ToList();
             return product;
             
         }
