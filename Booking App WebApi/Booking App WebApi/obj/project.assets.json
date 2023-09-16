@@ -1789,9 +1789,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\Booking App WebApi\\Booking App WebApi\\Booking App WebApi.csproj",
-      "projectName": "Booking App WebApi",
-      "projectPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\Booking App WebApi\\Booking App WebApi\\Booking App WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\Booking App WebApi\\Booking App WebApi\\BookingAppWebApi.csproj",
+      "projectName": "BookingAppWebApi",
+      "projectPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\Booking App WebApi\\Booking App WebApi\\BookingAppWebApi.csproj",
       "packagesPath": "C:\\Users\\Long\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\Booking App WebApi\\Booking App WebApi\\obj\\",
       "projectStyle": "PackageReference",

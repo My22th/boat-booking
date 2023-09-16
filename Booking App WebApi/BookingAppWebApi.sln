@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking App WebApi", "Booking App WebApi\Booking App WebApi.csproj", "{0154EFB8-E3B6-4F14-BCA9-156DE441FFA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingAppWebApi", "Booking App WebApi\BookingAppWebApi.csproj", "{0154EFB8-E3B6-4F14-BCA9-156DE441FFA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
