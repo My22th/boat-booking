@@ -17,8 +17,9 @@ jobs:
           dotnet-version: 7
       - uses: actions/checkout@v3.1.0
       - run: |
-          NET STOP WAS /Y 
-          dotnet publish boat-booking\boat-booking\Booking App WebApi\BookingAppWebApi.sln -c Release -o ./publishCodeBookingApp
+          NET STOP WAS /Y
+          dotnet publish boat-booking\boat-booking\Booking App WebApi\BookingAppWebApi.sln --configuration Release
+          
           powershell -Command "Start-Sleep -s 10"
           powershell -Command "Copy-Item ./publishCodeBookingApp/* D:BoatBooking -Recurse -Force"
           NET START W3SVC
