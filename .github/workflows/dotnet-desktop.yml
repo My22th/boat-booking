@@ -21,5 +21,5 @@ jobs:
           dotnet publish api-booking-app/api-booking-app.sln --configuration Release --force -o publishCodeBookingApp
 
           powershell -Command "Start-Sleep -s 10"
-          powershell -Command "Copy-Item ./publishCodeBookingApp/* D:BoatBooking -Recurse -Force"
+          powershell -Command "Copy-Item ./publishCodeBookingApp/* D:/BoatBooking -Recurse -Force"
           NET START W3SVC
