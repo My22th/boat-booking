@@ -6,7 +6,7 @@ namespace Booking_App_WebApi.Model.MongoDBFD
 {
     public class BookingService
     {
-        public IConfiguration _config;
+        public readonly IConfiguration _config;
         public readonly IMongoCollection<User> _usersCollection;
         public readonly IMongoCollection<Product> _productsCollection;
         //public readonly IMongoCollection<OrderModel> _ordersCollection;
