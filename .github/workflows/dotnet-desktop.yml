@@ -1,0 +1,21 @@
+name: .NET Core Desktop
+on:
+  push:
+    branches: ['main']
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [self-hosted, self-hosted]
+    defaults:
+      run:
+        shell: cmd
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - run: |
+          NET STOP WAS /Y 
+          dotnet publish Booking App WebApi/Booking App WebApi.sln -c Release --force --output publishCodeBookingApp
+          powershell -Command "Start-Sleep -s 10"
+          powershell -Command "Copy-Item ./publishCodeBookingApp/* D:BoatBooking -Recurse -Force"
+          NET START W3SVC
