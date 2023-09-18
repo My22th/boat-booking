@@ -4,6 +4,7 @@ using MongoDB.Bson;
 namespace Booking_App_WebApi.Model
 {
     [Serializable]
+    [BsonIgnoreExtraElements]
     public class Product
     {
         [BsonId]
