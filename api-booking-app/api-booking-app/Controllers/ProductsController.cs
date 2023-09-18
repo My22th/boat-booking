@@ -23,11 +23,13 @@ namespace Booking_App_WebApi.Controllers
         // GET: api/<ProductsController>
 
         [HttpGet("{id}")]
+        
         public Product GetByid(int id)
         {
             return _bookingService._productsCollection.Find(x => x.BoatId == id).FirstOrDefault();
         }
-        [HttpGet]
+        [HttpGet("search")]
+        
         public IEnumerable<Product> Get(string key = "", int sortPrice = 0, int page = 0, int pageSize = 10)
         {
             var sortqr = default(SortDefinition<Product>);
@@ -85,7 +87,7 @@ namespace Booking_App_WebApi.Controllers
         {
             var ft = Builders<Product>.Filter.Eq(x => x.BoatId, id);
             var isss = _bookingService._productsCollection.DeleteOne(ft);
-            return isss.DeletedCount == 1;
+            return isss.DeletedCount > 0;
         }
     }
 }
