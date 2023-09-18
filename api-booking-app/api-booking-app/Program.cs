@@ -1,5 +1,6 @@
 using Booking_App_WebApi.Model.MongoDBFD;
 using In_Anh.RabitMQ;
+using Lucene.Net.Analysis;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -34,8 +35,7 @@ builder.Services.Configure<IBoatBookingMgDatabase>(
 builder.Services.AddScoped<IBoatBookingMgDatabase, BoatBookingMgDatabase>();
 
 builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
-
-
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSingleton<BookingService>();
 builder.Services.AddSwaggerGen(c =>
