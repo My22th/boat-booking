@@ -12,7 +12,6 @@ namespace In_Anh.RabitMQ
     {
         public void SendProductMessage(IConnection connection, IModel channel, byte[] body)
         {
-
             try
             { 
                 var props = new HashMap<string, object>();

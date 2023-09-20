@@ -9,8 +9,11 @@ using System.Text;
 
 namespace Booking_App_WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+
+    [ApiExplorerSettings(GroupName = "V1")]
     public class AuthensController : ControllerBase
     {
         private IConfiguration _config;

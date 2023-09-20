@@ -1,15 +1,17 @@
-﻿using Booking_App_WebApi.Model;
-using Booking_App_WebApi.Model.MongoDBFD;
+﻿using Booking_App_WebApi.Model.MongoDBFD;
+using Booking_App_WebApi.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace Booking_App_WebApi.Controllers
+namespace api_booking_app.Controllers
 {
-    [Route("api/[controller]")]
+
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v2/product")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "V2")]
     public class ProductsController : ControllerBase
     {
         private readonly int PAGE_SIZE = 10;
@@ -23,13 +25,13 @@ namespace Booking_App_WebApi.Controllers
         // GET: api/<ProductsController>
 
         [HttpGet("{id}")]
-        
+
         public Product GetByid(int id)
         {
             return _bookingService._productsCollection.Find(x => x.BoatId == id).FirstOrDefault();
         }
         [HttpGet("search")]
-        
+
         public IEnumerable<Product> Get(string key = "", int sortPrice = 0, int page = 0, int pageSize = 10)
         {
             var sortqr = default(SortDefinition<Product>);

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Long Nguyen\\Desktop\\boatbooking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Long Nguyen\\Desktop\\boatbooking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Long Nguyen\\Desktop\\boatbooking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "projectUniqueName": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
         "projectName": "api-booking-app",
-        "projectPath": "C:\\Users\\Long Nguyen\\Desktop\\boatbooking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
-        "packagesPath": "C:\\Users\\Long Nguyen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Long Nguyen\\Desktop\\boatbooking\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
+        "projectPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "packagesPath": "C:\\Users\\Long\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Long Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Long\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,8 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,6 +48,14 @@
               "target": "Package",
               "version": "[7.0.11, )"
             },
+            "Microsoft.AspNetCore.Mvc.Versioning": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.2, )"
@@ -69,6 +71,10 @@
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "Swagger-Net": {
+              "target": "Package",
+              "version": "[8.4.19.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -98,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
