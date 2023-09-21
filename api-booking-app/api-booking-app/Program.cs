@@ -4,12 +4,15 @@ using Booking_App_WebApi.Controllers;
 using Booking_App_WebApi.Model.MongoDBFD;
 using In_Anh.RabitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using System.Text;
+using static Lucene.Net.Index.SegmentReader;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,5 +115,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("AllPolicy");
 app.MapControllers();
-
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+    context.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    await next.Invoke();
+});
 app.Run();
