@@ -77,6 +77,10 @@ namespace Booking_App_WebApi.Controllers
         [HttpPost]
         public bool PostAsync([FromBody] Product product)
         {
+            if (_bookingService._productsCollection.Find(x => x.BoatId.Equals(product.BoatId)).FirstOrDefault()!=null)
+            {
+                return false;
+            }
             _bookingService._productsCollection.InsertOne(product);
             return true;
         }
@@ -85,12 +89,12 @@ namespace Booking_App_WebApi.Controllers
         [HttpPut("{id}")]
         public bool Put(int id, [FromBody] Product product)
         {
-            var old = _bookingService._productsCollection.Find(x => x.BoatId == id);
+            var old = _bookingService._productsCollection.Find(x => x.BoatId == id).FirstOrDefault();
             if (old != null)
             {
                 var filter = Builders<Product>.Filter.Eq(x => x.BoatId, id);
                 var update = Builders<Product>.Update.Set(x => x, product);
-                var isss = _bookingService._productsCollection.UpdateOne(filter, update);
+                var isss = _bookingService._productsCollection.ReplaceOne(x=>x.BoatId == id, product);
                 return isss.MatchedCount > 0;
             }
             return false;

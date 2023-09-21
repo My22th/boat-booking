@@ -5,9 +5,11 @@ namespace Booking_App_WebApi.Model
 {
     [Serializable]
     [BsonIgnoreExtraElements]
+
     public class Product
     {
         [BsonId]
+        [BsonIgnoreIfDefault]
         public ObjectId _Id { get; set; }
         public int BoatId { get; set; }
         public string Name { get; set; }

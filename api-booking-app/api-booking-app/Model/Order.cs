@@ -8,6 +8,7 @@ namespace Booking_App_WebApi.Model
     public class Order
     {
         [BsonId]
+        [BsonIgnoreIfDefault]
         public ObjectId _Id { get; set; }
         public int OrderId { get; set; }
         public int BoatId { get; set; }
