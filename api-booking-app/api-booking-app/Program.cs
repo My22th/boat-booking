@@ -1,4 +1,5 @@
 
+using api_booking_app.Controllers.V1._0;
 using Booking_App_WebApi.Controllers;
 using Booking_App_WebApi.Model.MongoDBFD;
 using In_Anh.RabitMQ;
@@ -81,7 +82,8 @@ builder.Services.AddApiVersioning(
 
       options.Conventions.Controller<AuthensController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0));
       options.Conventions.Controller<api_booking_app.Controllers.V2._0.AuthensController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0));
-
+      options.Conventions.Controller<OrdersController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0));
+      //options.Conventions.Controller<api_booking_app.Controllers.V2._0.AuthensController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0));
       //options.AssumeDefaultVersionWhenUnspecified = true;
       //options.UseApiBehavior = false;
       options.ApiVersionReader = new UrlSegmentApiVersionReader();
@@ -108,7 +110,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllPolicy");
 app.MapControllers();
 
 app.Run();
