@@ -16,7 +16,7 @@ namespace Booking_App_WebApi.Model
         public decimal PricePerHour { get; set; }
         public string Location { get; set; }
         public List<string> Amenities { get; set; }
-        
+        public List<string> LstImgURL { get; set; }
         public string ManagerId { get; set; }
         public string ManagerName { get; set; }
         public string ManagerContact { get; set; }
