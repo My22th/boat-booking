@@ -15,7 +15,7 @@ namespace Booking_App_WebApi.Model
         public int Userid { get; set; }
         public DateTime BookingDate { get; set; }
         public int DurationInHours { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal Price { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string ShipDestinitaion { get; set; }    

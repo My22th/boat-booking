@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
   },
   "projects": {
-    "D:\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "projectUniqueName": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
         "projectName": "api-booking-app",
-        "projectPath": "D:\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
-        "packagesPath": "C:\\Users\\Long Nguyen\\.nuget\\packages\\",
-        "outputPath": "D:\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
+        "projectPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "packagesPath": "C:\\Users\\Long\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Long Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Long\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
