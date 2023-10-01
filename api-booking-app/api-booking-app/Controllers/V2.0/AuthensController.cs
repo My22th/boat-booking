@@ -25,8 +25,8 @@ namespace api_booking_app.Controllers.V2._0
 
 
 
-        [HttpGet]
-        public async Task<ActionResult> GenerateJSONWebTokenAsync(string _token)
+        [HttpPost]
+        public async Task<ActionResult> GenerateJSONWebTokenAsync([FromBody] string _token)
         {
             var customToken = FirebaseApp.DefaultInstance;
           var dataget = await FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token);
