@@ -17,6 +17,7 @@ Future<void> main() async {
   );
   await dotenv.load(fileName: "lib/.env");
   HttpOverrides.global = new MyHttpOverrides();
+
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   runApp(const MyApp());
 }
