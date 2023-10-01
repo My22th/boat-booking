@@ -128,6 +128,7 @@ app.MapControllers();
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     context.Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     await next.Invoke();
 });

@@ -5,8 +5,13 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   Future<String> fetchJWTTokenUser(String myToken) async {
-    final response = await http
-        .get(Uri.parse(dotenv.env['API_URL']! + "authens?_token=" + myToken));
+    final response = await http.post(
+      Uri.parse(dotenv.env['API_URL']! + "authens"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: myToken,
+    );
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
