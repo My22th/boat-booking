@@ -32,7 +32,7 @@ namespace In_Anh.RabitMQ
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "jinnie.shop",
+                HostName = "116.102.20.114",
                 VirtualHost = "/",
                 UserName = "admin",
                 Password = "admin"

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_boat/components/components.dart';
-import 'package:provider/provider.dart';
 
-import '../../models/ui.dart';
 import 'layer_one.dart';
+import 'layer_three.dart';
+import 'layer_two.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,37 +15,33 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    bool isChecked = false;
-    return Consumer<UI>(builder: (context, ui, child) {
-      return Scaffold(
-          backgroundColor: ui.isDark ? Colors.black : Colors.white,
-          body: SafeArea(
-              child: Container(
-                  decoration: BoxDecoration(
-                    // Box decoration takes a gradient
-                    gradient: LinearGradient(
-                      // Where the linear gradient begins and ends
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      // Add one stop for each color. Stops should increase from 0 to 1
-                      stops: getStopsColors(ui.isDark),
-                      colors: getColors(ui.isDark),
-                    ),
-                  ),
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        top: 0,
-                        right: 0,
-                        left: 0,
-                        bottom: 0,
-                        child: LayerOne(
-                          ui,
-                        )),
-                    // Positioned(
-                    //     top: 318, right: 0, bottom: 28, child: LayerTwo()),
-                    // Positioned(
-                    //     top: 320, right: 0, bottom: 48, child: LayerThree()),
-                  ]))));
-    });
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: Image.asset('assets/images/primaryBg.png').image,
+          fit: BoxFit.cover,
+        )),
+        child: Stack(
+          children: <Widget>[
+            const Positioned(
+                top: 100,
+                left: 59,
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                      fontSize: 48,
+                      fontFamily: 'Poppins-Medium',
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                )),
+            Positioned(top: 190, right: 0, bottom: 0, child: LayerOne()),
+            Positioned(top: 218, right: 0, bottom: 28, child: LayerTwo()),
+            Positioned(top: 220, right: 0, bottom: 48, child: LayerThree()),
+          ],
+        ),
+      ),
+    );
   }
 }

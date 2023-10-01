@@ -45,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCK_yDYg_UPMkZaMO9YBE2HhxXRcU6uvR0',
-    appId: '1:708740677078:web:18a336e3f4db0ddb033877',
+    appId: '1:708740677078:web:018725e2eb944e90033877',
     messagingSenderId: '708740677078',
     projectId: 'boatbooking-a2b5e',
     authDomain: 'boatbooking-a2b5e.firebaseapp.com',
     storageBucket: 'boatbooking-a2b5e.appspot.com',
-    measurementId: 'G-K761YRV6G5',
+    measurementId: 'G-KRZWEHR04B',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBXPjt55NOPIqjXDLX863ih8wDAoJQcK90',
-    appId: '1:708740677078:android:df6bac9b0fb5ca69033877',
+    appId: '1:708740677078:android:2c08eca2059a1bd3033877',
     messagingSenderId: '708740677078',
     projectId: 'boatbooking-a2b5e',
     storageBucket: 'boatbooking-a2b5e.appspot.com',
@@ -63,22 +63,22 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCQLwBPgok5BhbkZGPhyFF-u2xLJyzOtY8',
-    appId: '1:708740677078:ios:41f441160feff852033877',
+    appId: '1:708740677078:ios:067c35e996c1e42d033877',
     messagingSenderId: '708740677078',
     projectId: 'boatbooking-a2b5e',
     storageBucket: 'boatbooking-a2b5e.appspot.com',
-    androidClientId: '708740677078-od0tn5o9r481hgiqrs5crbkt73dn7pau.apps.googleusercontent.com',
+    androidClientId: '708740677078-4os4tlsgh9euvou09iprsesh7lnngbul.apps.googleusercontent.com',
     iosClientId: '708740677078-87p4bd06cr3pbhh0mqmi3n0n9unmrv49.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplicationBoat',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCQLwBPgok5BhbkZGPhyFF-u2xLJyzOtY8',
-    appId: '1:708740677078:ios:5aacd010f8a1d599033877',
+    appId: '1:708740677078:ios:af6f4ddb58f056ea033877',
     messagingSenderId: '708740677078',
     projectId: 'boatbooking-a2b5e',
     storageBucket: 'boatbooking-a2b5e.appspot.com',
-    androidClientId: '708740677078-od0tn5o9r481hgiqrs5crbkt73dn7pau.apps.googleusercontent.com',
+    androidClientId: '708740677078-4os4tlsgh9euvou09iprsesh7lnngbul.apps.googleusercontent.com',
     iosClientId: '708740677078-p126eb69m5ol5mb95s89p3fe34ljdqp7.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplicationBoat.RunnerTests',
   );

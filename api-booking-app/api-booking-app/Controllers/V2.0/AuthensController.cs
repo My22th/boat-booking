@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FirebaseAdmin.Auth;
+using FirebaseAdmin;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,16 +26,22 @@ namespace api_booking_app.Controllers.V2._0
 
 
         [HttpGet]
-        public ActionResult GenerateJSONWebToken(string _token)
+        public async Task<ActionResult> GenerateJSONWebTokenAsync(string _token)
         {
+            var customToken = FirebaseApp.DefaultInstance;
+          var dataget = await FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token);
+            string uid = dataget.Uid;
+
+            var user = await FirebaseAuth.GetAuth(customToken).GetUserAsync(uid);
             var claims = new[] {
                         new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                        new Claim("UserId", "123"),
-                        new Claim("DisplayName", "asdasd"),
-                        new Claim("UserName","asdasf"),
-                        new Claim("Email", "laosdasd@gmail.,com")
+                        new Claim("UserId", user.TenantId),
+                        new Claim("DisplayName", user.DisplayName),
+                        new Claim("Phone",user.PhoneNumber),
+                        new Claim("Email", user.Email),
+                        new Claim("Uid", user.Uid)
                     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

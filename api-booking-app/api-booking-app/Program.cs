@@ -2,6 +2,8 @@
 using api_booking_app.Controllers.V1._0;
 using Booking_App_WebApi.Controllers;
 using Booking_App_WebApi.Model.MongoDBFD;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using In_Anh.RabitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -34,7 +36,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
+if (FirebaseApp.DefaultInstance == null)
+{
+    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\service-account-file.json");
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.GetApplicationDefault(),
+        ProjectId = "boatbooking-a2b5e",
+    });
+}
 builder.Services.AddSingleton<IBoatBookingMgDatabase>(provider =>
     provider.GetRequiredService<IOptions<BoatBookingMgDatabase>>().Value);
 builder.Services.Configure<IBoatBookingMgDatabase>(

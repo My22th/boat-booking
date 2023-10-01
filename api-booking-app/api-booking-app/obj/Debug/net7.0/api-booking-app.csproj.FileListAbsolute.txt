@@ -247,3 +247,12 @@ D:\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\refint\api-book
 D:\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\api-booking-app.pdb
 D:\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\api-booking-app.genruntimeconfig.cache
 D:\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\ref\api-booking-app.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\FirebaseAdmin.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Api.Gax.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Api.Gax.Rest.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Apis.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Apis.Auth.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Google.Apis.Core.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\service-account-file.json

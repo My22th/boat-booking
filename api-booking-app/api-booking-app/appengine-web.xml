@@ -1,0 +1,4 @@
+﻿<env-variables>
+	<env-var name="GOOGLE_APPLICATION_CREDENTIALS"
+		value="C:\Users\Long\Desktop\boat-booking\boat-booking\api-booking-app\api-booking-app\service-account-file.json" />
+</env-variables>

@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/firebase_options.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'models/ui.dart';
+import 'screen/home_screen.dart';
 import 'screen/login/login_screen.dart';
 
 Future<void> main() async {
@@ -12,21 +12,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
-}
-
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
-Future<void> _handleSignIn() async {
-  try {
-    await _googleSignIn.signIn();
-  } catch (error) {
-    print(error);
-  }
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: LoginScreen.id,
         routes: {
-          // HomeScreen.id: (context) => const HomeScreen(),
+          HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
           // ProductScreen.id: (context) =>const ProductScreen(),
         },

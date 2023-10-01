@@ -28,6 +28,8 @@ namespace Booking_App_WebApi.Controllers
         [HttpGet]
         public ActionResult GenerateJSONWebToken(string _token)
         {
+
+
             var claims = new[] {
                         new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
