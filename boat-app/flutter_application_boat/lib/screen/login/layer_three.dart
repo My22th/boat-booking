@@ -25,8 +25,12 @@ class _LayerThree extends State<LayerThree> {
 
   bool isChecked = false;
 
-  checklogin(String token) {
-    var data = ApiService().fetchJWTTokenUser(token);
+  checklogin(String token) async {
+    var jwtoken = "";
+    await ApiService().fetchJWTTokenUser(token).then((value) {
+      jwtoken = value;
+    });
+    return jwtoken;
   }
 
   listenlogin() {
@@ -35,8 +39,8 @@ class _LayerThree extends State<LayerThree> {
         print('User is currently signed out!');
       } else {
         FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
-          var a = checklogin(value.toString());
-          var b = "";
+          print(value);
+          checklogin(value.toString());
         });
 
         print('User is signed in!');

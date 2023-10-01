@@ -37,11 +37,11 @@ namespace api_booking_app.Controllers.V2._0
                         new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                        new Claim("UserId", user.TenantId),
-                        new Claim("DisplayName", user.DisplayName),
-                        new Claim("Phone",user.PhoneNumber),
-                        new Claim("Email", user.Email),
-                        new Claim("Uid", user.Uid)
+                        new Claim("UserId", user.TenantId??""),
+                        new Claim("DisplayName", user.DisplayName??""),
+                        new Claim("Phone",user.PhoneNumber ?? ""),
+                        new Claim("Email", user.Email ?? ""),
+                        new Claim("Uid", user.Uid ?? "")
                     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
