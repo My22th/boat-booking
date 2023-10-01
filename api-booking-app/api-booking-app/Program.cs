@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 if (FirebaseApp.DefaultInstance == null)
 {
-    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\service-account-file.json");
+    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", ".\\service-account-file.json");
     FirebaseApp.Create(new AppOptions()
     {
         Credential = GoogleCredential.GetApplicationDefault(),

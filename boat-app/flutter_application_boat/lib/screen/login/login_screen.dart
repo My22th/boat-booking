@@ -23,9 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
           image: Image.asset('assets/images/primaryBg.png').image,
           fit: BoxFit.cover,
         )),
-        child: Stack(
+        child: const Stack(
           children: <Widget>[
-            const Positioned(
+            Positioned(
                 top: 100,
                 left: 59,
                 child: Text(

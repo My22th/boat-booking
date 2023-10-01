@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       body: Container(
-        child: Text("123Home"),
+        child: const Text("123Home"),
       ),
     );
   }

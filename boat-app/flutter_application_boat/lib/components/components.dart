@@ -44,10 +44,10 @@ List<double> getStopsColors(bool isDark) {
 
 List<Color> getColors(bool cl) => cl
     ? [
-        Color.fromRGBO(48, 207, 208, 1),
-        Color.fromRGBO(51, 8, 103, 1),
+        const Color.fromRGBO(48, 207, 208, 1),
+        const Color.fromRGBO(51, 8, 103, 1),
       ]
     : [
-        Color.fromRGBO(168, 237, 234, 1),
-        Color.fromRGBO(254, 214, 227, 1),
+        const Color.fromRGBO(168, 237, 234, 1),
+        const Color.fromRGBO(254, 214, 227, 1),
       ];
