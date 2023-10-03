@@ -45,11 +45,7 @@ if (FirebaseApp.DefaultInstance == null)
         ProjectId = "boatbooking-a2b5e",
     });
 }
-builder.Services.AddSingleton<IBoatBookingMgDatabase>(provider =>
-    provider.GetRequiredService<IOptions<BoatBookingMgDatabase>>().Value);
-builder.Services.Configure<IBoatBookingMgDatabase>(
-    builder.Configuration.GetSection("ImageMgDatabase"));
-builder.Services.AddScoped<IBoatBookingMgDatabase, BoatBookingMgDatabase>();
+
 builder.Services.AddHostedService<RabitMQConsumer>();
 builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -99,6 +95,10 @@ builder.Services.AddApiVersioning(
       //options.Conventions.Controller<api_booking_app.Controllers.V2._0.AuthensController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0));
       //options.AssumeDefaultVersionWhenUnspecified = true;
       //options.UseApiBehavior = false;
+      options.Conventions.Controller<CategorysController>().HasApiVersion(new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0));
+
+
+
       options.ApiVersionReader = new UrlSegmentApiVersionReader();
   }
 ).AddVersionedApiExplorer(o =>

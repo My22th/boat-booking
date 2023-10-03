@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/firebase_options.dart';
 import 'package:flutter_application_boat/models/ui.dart';
+import 'package:flutter_application_boat/screen/home_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
@@ -34,18 +35,31 @@ class _LayerThree extends State<LayerThree> {
   }
 
   listenlogin() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
-          print(value);
-          checklogin(value.toString());
-        });
-
-        print('User is signed in!');
-      }
+    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+      initfirebase(user);
     });
+    FirebaseAuth.instance.userChanges().listen((User? user) {
+      initfirebase(user);
+    });
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      initfirebase(user);
+    });
+  }
+
+  initfirebase(User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
+        String jwt = checklogin(value.toString()).toString();
+        if (jwt != "") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
+        }
+      });
+
+      print('User is signed in!');
+    }
   }
 
   @override

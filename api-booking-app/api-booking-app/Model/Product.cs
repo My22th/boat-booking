@@ -12,6 +12,7 @@ namespace Booking_App_WebApi.Model
         [BsonIgnoreIfDefault]
         public ObjectId _Id { get; set; }
         public int BoatId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Capacity { get; set; }

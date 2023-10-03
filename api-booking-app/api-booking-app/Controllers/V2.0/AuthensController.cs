@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace api_booking_app.Controllers.V2._0
 {
@@ -28,8 +31,9 @@ namespace api_booking_app.Controllers.V2._0
         [HttpPost]
         public async Task<ActionResult> GenerateJSONWebTokenAsync([FromBody] string _token)
         {
+           
             var customToken = FirebaseApp.DefaultInstance;
-          var dataget = await FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token);
+          var dataget = await FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token[0].ToString());
             string uid = dataget.Uid;
 
             var user = await FirebaseAuth.GetAuth(customToken).GetUserAsync(uid);
