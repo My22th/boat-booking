@@ -1,17 +1,17 @@
 class CategoryBoat {
   String id;
-  int categoryId;
-  String name;
-  double categoryPrice;
-  double categoryVolume;
-  String lat;
-  String long;
-  String title;
-  String description;
-  List<String> lstImgURL;
-  BoatType type;
-  int capacity;
-  double pricePerDay;
+  int? categoryId;
+  String? name;
+  double? categoryPrice;
+  double? categoryVolume;
+  String? lat;
+  String? long;
+  String? title;
+  String? description;
+  List<String>? lstImgURL;
+  BoatType? type;
+  int? capacity;
+  double? pricePerDay;
 
   CategoryBoat({
     required this.id,

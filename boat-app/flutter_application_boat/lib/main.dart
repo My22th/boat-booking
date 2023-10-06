@@ -7,8 +7,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'models/ui.dart';
-import 'screen/home_screen.dart';
+import 'screen/home/home_screen.dart';
 import 'screen/login/login_screen.dart';
+import 'screen/product/product_detail_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,12 +40,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UI()),
+        ChangeNotifierProvider(create: (_) => Cart()),
       ],
       child: MaterialApp(
         initialRoute: LoginScreen.id,
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
+          ProductDetailPage.id: (context) => const LoginScreen()
           // ProductScreen.id: (context) =>const ProductScreen(),
         },
       ),

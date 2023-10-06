@@ -3,12 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/firebase_options.dart';
 import 'package:flutter_application_boat/models/ui.dart';
-import 'package:flutter_application_boat/screen/home_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../../data_source/api_service.dart';
 import '../config.dart';
+import '../home/home_screen.dart';
 
 class LayerThree extends StatefulWidget {
   const LayerThree({super.key});
@@ -65,7 +65,7 @@ class _LayerThree extends State<LayerThree> {
   @override
   void initState() {
     super.initState();
-    listenlogin();
+
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -219,6 +219,7 @@ class _LayerThree extends State<LayerThree> {
                       child: IconButton(
                           onPressed: () async {
                             await _googleSignIn.signIn().then((value) {
+                              ui.account = value;
                               value?.authentication.then((ggkey) async {
                                 final credential =
                                     GoogleAuthProvider.credential(
@@ -226,6 +227,8 @@ class _LayerThree extends State<LayerThree> {
                                         accessToken: ggkey.accessToken);
                                 await FirebaseAuth.instance
                                     .signInWithCredential(credential);
+
+                                listenlogin();
                               });
                             });
                           },

@@ -29,15 +29,35 @@ class ApiService {
     return "";
   }
 
-  Future<CategoryBoat?> getAllCate() async {
+  Future<List<CategoryBoat>> getAllCate() async {
     try {
       Dio dio = Dio();
-      var response = await dio.get(dotenv.env['VAR_NAME']! + "authens");
 
-      return response.data;
+      var response = await dio.get(dotenv.env['API_URL']! + "categorys");
+      List<CategoryBoat> productList = List.empty(growable: true);
+      var a = response.data[1]["lstImgURL"];
+      response.data.forEach((json) => {
+            productList.add(CategoryBoat(
+              id: "",
+              title: json['title'],
+              pricePerDay: json['pricePerDay'].toDouble(),
+              description: json['description'],
+              lstImgURL: [json["lstImgURL"][0]],
+              capacity: json['capacity'],
+              categoryId: json['categoryId'],
+              categoryPrice: json['categoryPrice'].toDouble(),
+              categoryVolume: json['categoryVolume'],
+              lat: json['lat'],
+              long: json['long'],
+              name: json['name'],
+              type: BoatType(id: 1, name: "long"),
+            ))
+          });
+
+      return productList;
     } catch (e) {
       print(e.toString());
     }
-    return null;
+    return List.empty();
   }
 }
