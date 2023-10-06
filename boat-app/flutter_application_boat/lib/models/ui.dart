@@ -19,7 +19,6 @@ class UI with ChangeNotifier {
 }
 
 class Cart with ChangeNotifier {
-  final bool _isDark = false;
   GoogleSignInAccount? _account;
   set isDark(newValue) {
     isDark = newValue;
@@ -31,6 +30,5 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get darkMode => _isDark;
   GoogleSignInAccount? get account => _account;
 }

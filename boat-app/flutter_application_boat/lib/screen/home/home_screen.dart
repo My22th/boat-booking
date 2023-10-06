@@ -9,21 +9,11 @@ import '../../models/base_model.dart';
 import '../../models/ui.dart';
 import '../../themes/light_color.dart';
 import '../../themes/theme.dart';
-import 'home_page.dart';
+import 'widget/home_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static String id = 'home_screen';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: const Text("123Home"),
-      ),
-    );
-  }
-
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
