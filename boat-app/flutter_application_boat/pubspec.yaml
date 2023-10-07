@@ -44,6 +44,9 @@ dependencies:
   cached_network_image: ^3.3.0
   auto_mappr: ^2.0.1
   google_fonts: ^6.1.0
+  syncfusion_flutter_datepicker: ^23.1.39
+  intl: ^0.18.1
+  custom_date_range_picker: ^1.0.10
 
 dev_dependencies:
   flutter_test:

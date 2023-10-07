@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'layer_one.dart';
-import 'layer_three.dart';
-import 'layer_two.dart';
+import 'widget/layer_one.dart';
+import 'widget/layer_three.dart';
+import 'widget/layer_two.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

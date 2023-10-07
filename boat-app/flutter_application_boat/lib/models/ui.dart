@@ -32,3 +32,21 @@ class Cart with ChangeNotifier {
 
   GoogleSignInAccount? get account => _account;
 }
+
+class SelectedDate with ChangeNotifier {
+  DateTime? _fromdate;
+  DateTime? _todate;
+
+  set fromdate(DateTime newValue) {
+    _fromdate = newValue;
+    notifyListeners();
+  }
+
+  set todate(DateTime newValue) {
+    _todate = newValue;
+    notifyListeners();
+  }
+
+  DateTime? get getfromdate => _fromdate;
+  DateTime? get gettodate => _fromdate;
+}

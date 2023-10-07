@@ -2,11 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/screen/product/product_detail_screen.dart';
 
-import '../../data_source/api_service.dart';
-import '../../models/cate_model.dart';
-import '../../themes/light_color.dart';
-import '../../themes/theme.dart';
-import '../category/cate_item.dart';
+import '../../../data_source/api_service.dart';
+import '../../../models/cate_model.dart';
+import '../../../themes/light_color.dart';
+import '../../../themes/theme.dart';
+import 'cate_item.dart';
+import 'selected_date.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, required this.title}) : super(key: key);
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isShowDate = false;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,12 +32,23 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _search(),
-            _productWidget(context),
+            // _search(),
+            // SelectedDateWidget()
+            SizedBox(
+              width: 200.0,
+              height: 300.0,
+              child: _datePicker(),
+            ),
+
+            // _productWidget(context),
           ],
         ),
       ),
     );
+  }
+
+  Widget _datePicker() {
+    return SelectedDateWidget();
   }
 
   Widget _icons(IconData icon, {Color color = LightColor.iconColor}) {

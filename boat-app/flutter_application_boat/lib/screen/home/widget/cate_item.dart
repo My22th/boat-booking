@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/models/cate_model.dart';
 import 'package:flutter_application_boat/screen/product/product_detail_screen.dart';
 
-import '../../components/title_text.dart';
-import '../../themes/light_color.dart';
+import '../../../components/title_text.dart';
+import '../../../themes/light_color.dart';
 
 class CateGridItem extends StatefulWidget {
   final CategoryBoat cate;

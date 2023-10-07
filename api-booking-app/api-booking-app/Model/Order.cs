@@ -14,11 +14,36 @@ namespace Booking_App_WebApi.Model
         public int BoatId { get; set; }
         public int Userid { get; set; }
         public DateTime BookingDate { get; set; }
+
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public int DurationInHours { get; set; }
         public decimal Price { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
-        public string ShipDestinitaion { get; set; }    
-        
+        public string ShipDestinitaion { get; set; }
+        public int SuplierId { get; set; }
+        public string FeedBack {  get; set; }
+        public double Stats { get; set; }
+        public List<Payment> Payment { get; set; }
+
+    }
+    public class Payment
+    {
+        [BsonId]
+        [BsonIgnoreIfDefault]
+        public ObjectId _Id { get; set; }
+        public int Id { get; set; }
+        public int Allowedstatus { get; set; }
+        public double Price { get; set; }
+    }
+    public class PaymentType
+    {
+        [BsonId]
+        [BsonIgnoreIfDefault]
+        public ObjectId _Id { get; set; }
+        public int Id { get; set; }
+        public string Paymentname { get; set; }
+        public int Status { get; set; }
     }
 }

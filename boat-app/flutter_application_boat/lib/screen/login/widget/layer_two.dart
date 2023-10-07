@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config.dart';
+import '../../config.dart';
 
 class LayerTwo extends StatelessWidget {
   const LayerTwo({super.key});

@@ -32,8 +32,6 @@ namespace Booking_App_WebApi.Model
         public string InsuranceProvider { get; set; }
         public DateTime InsuranceExpiry { get; set; }
         public List<string> SafetyEquipment { get; set; }
-        
-
     }
 
 }

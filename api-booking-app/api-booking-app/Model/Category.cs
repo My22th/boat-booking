@@ -22,6 +22,8 @@ namespace api_booking_app.Model
         public BoatType? Type { get; set; }
         public int Capacity { get; set; }
         public decimal PricePerDay { get; set; }
+        public int SuplierId { get; set; }
+        public List<int> RelatedCate { get; set; }
     }
     public class BoatType
     {

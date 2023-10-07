@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => UI()),
         ChangeNotifierProvider(create: (_) => Cart()),
+        ChangeNotifierProvider(create: (_) => SelectedDate()),
       ],
       child: MaterialApp(
         initialRoute: LoginScreen.id,

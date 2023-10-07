@@ -6,9 +6,9 @@ import 'package:flutter_application_boat/models/ui.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
-import '../../data_source/api_service.dart';
-import '../config.dart';
-import '../home/home_screen.dart';
+import '../../../data_source/api_service.dart';
+import '../../config.dart';
+import '../../home/home_screen.dart';
 
 class LayerThree extends StatefulWidget {
   const LayerThree({super.key});
