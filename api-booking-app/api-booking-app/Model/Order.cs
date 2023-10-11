@@ -23,10 +23,21 @@ namespace Booking_App_WebApi.Model
         public string CustomerEmail { get; set; }
         public string ShipDestinitaion { get; set; }
         public int SuplierId { get; set; }
-        public string FeedBack {  get; set; }
         public double Stats { get; set; }
         public List<Payment> Payment { get; set; }
+        public FeedBack FeedBack { get; set; }
 
+    }
+    public class FeedBack
+    {
+        [BsonId]
+        [BsonIgnoreIfDefault]
+        public ObjectId _Id { get; set; }
+        public int Id { get; set; }
+        public string Notes { get; set; }
+        public double Rating { get; set; }
+        public DateTime PublishDate { get; set; }
+        public int Active { get; set; }
     }
     public class Payment
     {

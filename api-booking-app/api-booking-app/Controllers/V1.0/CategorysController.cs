@@ -2,7 +2,12 @@
 using Booking_App_WebApi.Model;
 using Booking_App_WebApi.Model.MongoDBFD;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using static System.Reflection.Metadata.BlobBuilder;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,7 +38,42 @@ namespace api_booking_app.Controllers.V1._0
         {
             return _bookingService._catesCollection.FindAsync(x => true, null).Result.FirstOrDefault();
         }
-
+        [HttpGet("getbydate")]
+        public ActionResult Get(DateTime? fromdate, DateTime? todate)
+        {
+            //if (fromdate == null || todate == null)
+            //{
+            //    return new JsonResult(new
+            //    {
+            //        code = 400,
+            //        msg = "Cannot detect date"
+            //    });
+            //}
+            //if (fromdate > DateTime.Now || todate > DateTime.Now)
+            //{
+            //    return new JsonResult(new
+            //    {
+            //        code = 400,
+            //        msg = "Cannot detect date"
+            //    });
+            //}
+            var filter = Builders<Order>.Filter.Gte(x => x.FromDate, fromdate);
+            filter &= Builders<Order>.Filter.Lte(x => x.ToDate, todate);
+            var lstorder = _bookingService._ordersCollection.FindAsync(filter).Result.ToList();
+            var lstexclude = lstorder.Select(x=>x.BoatId).ToArray();
+            var resultPRodcut = _bookingService._catesCollection.Aggregate()
+                .Lookup<Category, Product, LookedUpCate>(_bookingService._productsCollection,
+                    x => x.CategoryId,
+                    y => y.CategoryId,
+                    y=>y.InnerProducts
+            ).ToList().Where(x=>x.InnerProducts.Any()&& !x.InnerProducts.Select(y=>y.BoatId).ToArray().Intersect(lstexclude).Any()).ToList();
+            return new JsonResult(new
+            {
+                code = 200,
+                msg = Newtonsoft.Json.JsonConvert.SerializeObject(resultPRodcut)
+            }); 
+            //return _bookingService._catesCollection.FindAsync(x => true, null).Result.FirstOrDefault();
+        }
         // POST api/<CategorysController>
         [HttpPost]
         public bool Post([FromBody] Category value)

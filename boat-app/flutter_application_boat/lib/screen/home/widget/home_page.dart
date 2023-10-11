@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/screen/product/product_detail_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../data_source/api_service.dart';
 import '../../../models/cate_model.dart';
+import '../../../models/ui.dart';
 import '../../../themes/light_color.dart';
 import '../../../themes/theme.dart';
 import 'cate_item.dart';
@@ -19,8 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isShowDate = false;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -35,11 +35,18 @@ class _HomePageState extends State<HomePage> {
             // _search(),
             // SelectedDateWidget()
             SizedBox(
-              width: 200.0,
-              height: 300.0,
+              width: 260.0,
+              height: 45.0,
               child: _datePicker(),
             ),
-
+            Consumer<SelectedDate>(
+              builder: (context, ui, child) {
+                if (ui.getfromdate != null && ui.gettodate != null) {
+                  return _productWidget(context);
+                }
+                return Text("");
+              },
+            )
             // _productWidget(context),
           ],
         ),
@@ -48,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _datePicker() {
-    return SelectedDateWidget();
+    return const SelectedDateWidget();
   }
 
   Widget _icons(IconData icon, {Color color = LightColor.iconColor}) {

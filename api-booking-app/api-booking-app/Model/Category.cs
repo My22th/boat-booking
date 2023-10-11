@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Booking_App_WebApi.Model;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace api_booking_app.Model
@@ -24,6 +25,7 @@ namespace api_booking_app.Model
         public decimal PricePerDay { get; set; }
         public int SuplierId { get; set; }
         public List<int> RelatedCate { get; set; }
+
     }
     public class BoatType
     {
@@ -32,5 +34,13 @@ namespace api_booking_app.Model
         public ObjectId _Id { get; set; }
         public int Id { get; set; } 
         public string Name { get; set; }
+    }
+    [BsonIgnoreExtraElements]
+    public class LookedUpCate : Category
+    {
+
+        // Add more properties as you need
+
+        public IEnumerable<Product> InnerProducts { get; set; }
     }
 }

@@ -32,6 +32,17 @@ namespace Booking_App_WebApi.Model
         public string InsuranceProvider { get; set; }
         public DateTime InsuranceExpiry { get; set; }
         public List<string> SafetyEquipment { get; set; }
+        public List<Reviews> Reviews { get; set; }
     }
-
+    public class Reviews
+    {
+        [BsonId]
+        [BsonIgnoreIfDefault]
+        public ObjectId _Id { get; set; }
+        public int Id { get; set; }
+        public string Notes { get; set; }
+        public double Rating { get; set; }
+        public DateTime PublishDate { get; set; }
+        public int Active { get; set; }
+    }
 }

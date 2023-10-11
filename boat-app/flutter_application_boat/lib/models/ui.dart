@@ -48,5 +48,5 @@ class SelectedDate with ChangeNotifier {
   }
 
   DateTime? get getfromdate => _fromdate;
-  DateTime? get gettodate => _fromdate;
+  DateTime? get gettodate => _todate;
 }
