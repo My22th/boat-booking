@@ -47,7 +47,9 @@ class _CateGridItemState extends State<CateGridItem> {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProductDetailPage())),
+                        builder: (context) => ProductDetailPage(
+                              cate: widget.cate,
+                            ))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

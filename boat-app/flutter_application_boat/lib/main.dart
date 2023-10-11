@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'models/ui.dart';
 import 'screen/home/home_screen.dart';
+import 'screen/home/widget/shopping_cart_screen.dart';
 import 'screen/login/login_screen.dart';
 import 'screen/product/product_detail_screen.dart';
 
@@ -48,7 +49,10 @@ class MyApp extends StatelessWidget {
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
-          ProductDetailPage.id: (context) => const ProductDetailPage()
+          ShoppingCartPage.id: (context) => const ShoppingCartPage(),
+          ProductDetailPage.id: (context) => const ProductDetailPage(
+                cate: null,
+              )
           // ProductScreen.id: (context) =>const ProductScreen(),
         },
       ),

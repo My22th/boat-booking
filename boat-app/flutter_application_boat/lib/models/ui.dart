@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_boat/models/cart_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UI with ChangeNotifier {
@@ -19,18 +20,13 @@ class UI with ChangeNotifier {
 }
 
 class Cart with ChangeNotifier {
-  GoogleSignInAccount? _account;
-  set isDark(newValue) {
-    isDark = newValue;
+  final List<CartModel> _cart = List.empty(growable: true);
+  set addToCart(CartModel newValue) {
+    _cart.add(newValue);
     notifyListeners();
   }
 
-  set account(newValue) {
-    _account = newValue;
-    notifyListeners();
-  }
-
-  GoogleSignInAccount? get account => _account;
+  List<CartModel>? get cart => _cart;
 }
 
 class SelectedDate with ChangeNotifier {

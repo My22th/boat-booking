@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_boat/screen/product/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data_source/api_service.dart';
@@ -42,7 +41,8 @@ class _HomePageState extends State<HomePage> {
             Consumer<SelectedDate>(
               builder: (context, ui, child) {
                 if (ui.getfromdate != null && ui.gettodate != null) {
-                  return _productWidget(context);
+                  return _productWidget(
+                      context, ui.getfromdate!, ui.gettodate!);
                 }
                 return Text("");
               },
@@ -80,56 +80,52 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  Widget _productWidget(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ProductDetailPage())),
-      child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          width: AppTheme.fullWidth(context),
-          height: AppTheme.fullWidth(context) * .7,
-          child: FutureBuilder<List<CategoryBoat>>(
-            future: ApiService().getAllCate(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<CategoryBoat>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.connectionState == ConnectionState.none) {
-                return const Center(
-                  child: Text('An error occurred!'),
-                );
-              } else if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  if (snapshot.error != null) {
-                    // ...
-                    // Do error handling stuff
-                    return const Center(
-                      child: Text('An error occurred!'),
-                    );
-                  } else {
-                    List<CategoryBoat> data = snapshot.data!;
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      width: AppTheme.fullWidth(context),
-                      height: AppTheme.fullWidth(context) * .7,
-                      child: GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 1,
-                                  childAspectRatio: 4 / 3,
-                                  mainAxisSpacing: 30,
-                                  crossAxisSpacing: 20),
-                          padding: const EdgeInsets.only(left: 20),
-                          scrollDirection: Axis.horizontal,
-                          children: _renderItem(data)),
-                    );
-                  }
+  Widget _productWidget(BuildContext context, DateTime fd, DateTime td) {
+    return Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        width: AppTheme.fullWidth(context),
+        height: AppTheme.fullWidth(context) * .7,
+        child: FutureBuilder<List<CategoryBoat>>(
+          future: ApiService().getAllCate(fd, td),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CategoryBoat>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.connectionState == ConnectionState.none) {
+              return const Center(
+                child: Text('An error occurred!'),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                if (snapshot.error != null) {
+                  // ...
+                  // Do error handling stuff
+                  return const Center(
+                    child: Text('An error occurred!'),
+                  );
+                } else {
+                  List<CategoryBoat> data = snapshot.data!;
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    width: AppTheme.fullWidth(context),
+                    height: AppTheme.fullWidth(context) * .7,
+                    child: GridView(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1,
+                                childAspectRatio: 4 / 3,
+                                mainAxisSpacing: 30,
+                                crossAxisSpacing: 20),
+                        padding: const EdgeInsets.only(left: 20),
+                        scrollDirection: Axis.horizontal,
+                        children: _renderItem(data)),
+                  );
                 }
               }
-              return const Center(child: CircularProgressIndicator());
-            },
-          )),
-    );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ));
   }
 
   List<Widget> _renderItem(List<CategoryBoat> data) {

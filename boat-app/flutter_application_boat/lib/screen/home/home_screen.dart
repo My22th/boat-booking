@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/models/cate_model.dart';
+import 'package:flutter_application_boat/screen/home/widget/shopping_cart_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/bottom_navigation_bar.dart';
 import '../../components/title_text.dart';
-import '../../data_source/api_service.dart';
 import '../../models/base_model.dart';
 import '../../models/ui.dart';
 import '../../themes/light_color.dart';
@@ -16,14 +16,6 @@ class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
-}
-
-getAllCate() async {
-  List<CategoryBoat>? cb = List.empty(growable: true);
-  await ApiService().getAllCate().then((value) {
-    cb = value;
-  });
-  return cb;
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -165,10 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? HomePage(
                                 title: 'Home',
                               )
-                            : const Align(
-                                alignment: Alignment.topCenter,
-                                child: null,
-                              ),
+                            : currentpage == CurrentPage.cart
+                                ? const ShoppingCartPage()
+                                : const Align(
+                                    alignment: Alignment.topCenter,
+                                    child: null,
+                                  ),
                       ),
                     )
                   ],

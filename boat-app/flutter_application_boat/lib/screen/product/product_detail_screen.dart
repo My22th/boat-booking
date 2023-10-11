@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_boat/models/cart_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/title_text.dart';
+import '../../models/cate_model.dart';
+import '../../models/ui.dart';
 import '../../themes/light_color.dart';
 import '../../themes/theme.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({Key? key}) : super(key: key);
+  const ProductDetailPage({Key? key, required this.cate}) : super(key: key);
   static String id = 'product_screen';
-
+  final CategoryBoat? cate;
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
 }
@@ -16,6 +20,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
+  late String currnentimg = widget.cate!.lstImgURL![0].toString();
   @override
   void initState() {
     super.initState();
@@ -117,9 +122,24 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             fontSize: 160,
             color: LightColor.lightGrey,
           ),
-          Image.asset('assets/images/icon_google.png')
+          Image.network(currnentimg.toString(),
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              fit: BoxFit.fill)
         ],
       ),
+    );
+  }
+
+  Widget _categoryWidget(List<String> img) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 0),
+      width: AppTheme.fullWidth(context),
+      height: 80,
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: img.map((x) => _thumbnail(x)).toList()),
     );
   }
 
@@ -133,19 +153,20 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         child: child,
       ),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
-          height: 40,
-          width: 50,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: LightColor.grey,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(13)),
-            // color: Theme.of(context).backgroundColor,
-          ),
-          child: Image.asset(image),
-        ),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: InkWell(
+            onTap: () => setState(() {
+                  currnentimg = image;
+                }),
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(13)),
+                child: Image.network(image,
+                    width: 80,
+                    height: 50,
+                    alignment: Alignment.center,
+                    fit: BoxFit.fill)
+                // color: Theme.of(context).backgroundColor,
+                )),
       ),
     );
   }
@@ -183,29 +204,30 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 ),
                 const SizedBox(height: 10),
                 Container(
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TitleText(text: "NIKE AIR MAX 200", fontSize: 25),
+                      TitleText(
+                          text: widget.cate!.name.toString(), fontSize: 25),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              TitleText(
+                              const TitleText(
                                 text: "\$ ",
                                 fontSize: 18,
                                 color: LightColor.red,
                               ),
                               TitleText(
-                                text: "240",
+                                text: widget.cate!.pricePerDay.toString(),
                                 fontSize: 25,
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             children: <Widget>[
                               Icon(Icons.star,
                                   color: LightColor.yellowColor, size: 17),
@@ -230,11 +252,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 const SizedBox(
                   height: 20,
                 ),
-                _availableColor(),
                 const SizedBox(
                   height: 20,
                 ),
                 _description(),
+                _enginetype()
               ],
             ),
           ),
@@ -248,18 +270,12 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const TitleText(
-          text: "Available Size",
+          text: "Capacity Size",
           fontSize: 14,
         ),
         const SizedBox(height: 20),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _sizeWidget("US 6"),
-            _sizeWidget("US 7", isSelected: true),
-            _sizeWidget("US 8"),
-            _sizeWidget("US 9"),
-          ],
+          children: <Widget>[Text(widget.cate!.capacity.toString())],
         )
       ],
     );
@@ -334,56 +350,148 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   Widget _description() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        TitleText(
-          text: "Available Size",
-          fontSize: 14,
-        ),
-        SizedBox(height: 20),
-        Text("Decrption"),
-      ],
-    );
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const TitleText(
+              text: "Decription Size",
+              fontSize: 14,
+            ),
+            const SizedBox(height: 20),
+            Text(widget.cate!.description.toString()),
+          ],
+        ));
   }
 
-  FloatingActionButton _flotingButton() {
-    return FloatingActionButton(
-      onPressed: () {},
-      backgroundColor: LightColor.orange,
-      child: Icon(Icons.shopping_basket,
-          color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
-    );
+  Widget _enginetype() {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 20),
+            const TitleText(
+              text: "Engine Type",
+              fontSize: 14,
+            ),
+            const SizedBox(height: 20),
+            Text(widget.cate!.title.toString()),
+          ],
+        ));
+  }
+
+  Consumer<Cart> _flotingButton(DateTime fromdate, DateTime todate) {
+    return Consumer<Cart>(builder: (context, ui, child) {
+      return FloatingActionButton.extended(
+        label: Padding(
+          padding: const EdgeInsets.only(
+            left: 0,
+          ),
+          child: Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1),
+              shape: BoxShape.circle,
+              // You can use like this way or like the below line
+              //borderRadius: new BorderRadius.circular(30.0),
+              color: const Color.fromARGB(255, 125, 233, 190),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TitleText(
+                  text: ui.cart == null ? "0" : ui.cart!.length.toString(),
+                  fontSize: 9,
+                ),
+              ],
+            ),
+          ),
+        ),
+        onPressed: () {
+          if (ui.cart!
+              .any((s) => s.cate.categoryId == widget.cate!.categoryId)) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const TitleText(
+                      text: "You adrealy add item!", fontSize: 20),
+                  actions: [
+                    TextButton(
+                      child: const Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            CartModel cartit = CartModel(
+                cate: widget.cate!, formdate: fromdate, todate: todate);
+            ui.addToCart = cartit;
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const TitleText(
+                      text: "Add item to cart success!", fontSize: 20),
+                  actions: [
+                    TextButton(
+                      child: const Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        },
+        backgroundColor: const Color.fromRGBO(230, 88, 41, 1),
+        icon: Icon(Icons.shopping_basket,
+            color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: _flotingButton(),
-      body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Color(0xfffbfbfb),
-              Color(0xfff7f7f7),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          )),
-          child: Stack(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  _appBar(),
-                  _productImage(),
-                ],
-              ),
-              _detailWidget()
-            ],
+    return Consumer<SelectedDate>(builder: (context, sd, child) {
+      return Scaffold(
+        floatingActionButton: _flotingButton(sd.getfromdate!, sd.gettodate!),
+        body: SafeArea(
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Color(0xfffbfbfb),
+                Color(0xfff7f7f7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    _appBar(),
+                    _productImage(),
+                    _categoryWidget(widget.cate!.lstImgURL!.toList()),
+                  ],
+                ),
+                _detailWidget(),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

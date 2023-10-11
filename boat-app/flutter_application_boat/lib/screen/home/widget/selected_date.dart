@@ -45,7 +45,7 @@ class _SelectedDate extends State<SelectedDateWidget> {
             showCustomDateRangePicker(
               context,
               dismissible: true,
-              minimumDate: DateTime.now().subtract(const Duration(days: 90)),
+              minimumDate: DateTime.now().subtract(const Duration(days: 0)),
               maximumDate: DateTime.now().add(const Duration(days: 90)),
               endDate: ui.gettodate,
               startDate: ui.getfromdate,
