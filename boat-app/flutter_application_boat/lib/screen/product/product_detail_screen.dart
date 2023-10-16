@@ -385,79 +385,70 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   Consumer<Cart> _flotingButton(DateTime fromdate, DateTime todate) {
     return Consumer<Cart>(builder: (context, ui, child) {
       return FloatingActionButton.extended(
-        label: Padding(
-          padding: const EdgeInsets.only(
-            left: 0,
-          ),
-          child: Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1),
-              shape: BoxShape.circle,
-              // You can use like this way or like the below line
-              //borderRadius: new BorderRadius.circular(30.0),
-              color: const Color.fromARGB(255, 125, 233, 190),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TitleText(
-                  text: ui.cart == null ? "0" : ui.cart!.length.toString(),
-                  fontSize: 9,
-                ),
-              ],
+          label: Positioned(
+            left: 10,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 0,
+              ),
+              child: SizedBox(
+                  width: 20,
+                  child: Positioned(
+                    left: 20,
+                    child: CircleAvatar(
+                      child: Text(
+                          ui.cart == null ? "0" : ui.cart!.length.toString()),
+                    ),
+                  )),
             ),
           ),
-        ),
-        onPressed: () {
-          if (ui.cart!
-              .any((s) => s.cate.categoryId == widget.cate!.categoryId)) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: const TitleText(
-                      text: "You adrealy add item!", fontSize: 20),
-                  actions: [
-                    TextButton(
-                      child: const Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          } else {
-            CartModel cartit = CartModel(
-                cate: widget.cate!, formdate: fromdate, todate: todate);
-            ui.addToCart = cartit;
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: const TitleText(
-                      text: "Add item to cart success!", fontSize: 20),
-                  actions: [
-                    TextButton(
-                      child: const Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        },
-        backgroundColor: const Color.fromRGBO(230, 88, 41, 1),
-        icon: Icon(Icons.shopping_basket,
-            color: Theme.of(context).floatingActionButtonTheme.backgroundColor),
-      );
+          onPressed: () {
+            if (ui.cart!
+                .any((s) => s.cate.categoryId == widget.cate!.categoryId)) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: const TitleText(
+                        text: "You adrealy add item!", fontSize: 20),
+                    actions: [
+                      TextButton(
+                        child: const Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              CartModel cartit = CartModel(
+                  cate: widget.cate!, formdate: fromdate, todate: todate);
+              ui.addToCart = cartit;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: const TitleText(
+                        text: "Add item to cart success!", fontSize: 20),
+                    actions: [
+                      TextButton(
+                        child: const Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          backgroundColor: const Color.fromRGBO(230, 88, 41, 1),
+          icon: Icon(Icons.shopping_basket,
+              color:
+                  Theme.of(context).floatingActionButtonTheme.backgroundColor));
     });
   }
 

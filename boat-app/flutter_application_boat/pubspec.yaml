@@ -47,6 +47,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^23.1.39
   intl: ^0.18.1
   custom_date_range_picker: ^1.0.10
+  confirm_dialog: ^1.0.2
 
 dev_dependencies:
   flutter_test:

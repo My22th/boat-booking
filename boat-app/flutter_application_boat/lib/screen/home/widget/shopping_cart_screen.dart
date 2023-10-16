@@ -1,11 +1,14 @@
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/models/cart_model.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/title_text.dart';
 import '../../../models/ui.dart';
 import '../../../themes/light_color.dart';
 import '../../../themes/theme.dart';
+import '../../checkout/checkout_screen.dart';
 
 class ShoppingCartPage extends StatelessWidget {
   static var id = "shoppingcart_page";
@@ -14,12 +17,13 @@ class ShoppingCartPage extends StatelessWidget {
 
   Widget _cartItems() {
     return Consumer<Cart>(builder: (context, ui, child) {
-      return Column(children: ui.cart!.map((x) => _item(x)).toList());
+      return Column(
+          children: ui.cart!.map((x) => _item(x, context, ui)).toList());
     });
   }
 
-  Widget _item(CartModel model) {
-    return Container(
+  Widget _item(CartModel model, BuildContext context, Cart ui) {
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
@@ -29,7 +33,7 @@ class ShoppingCartPage extends StatelessWidget {
               children: <Widget>[
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Container(
+                  child: SizedBox(
                     height: 70,
                     width: 70,
                     child: Stack(
@@ -47,10 +51,19 @@ class ShoppingCartPage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: -20,
-                  bottom: -20,
-                  child: Image.network(model.cate.lstImgURL![0].toString()),
-                )
+                    left: -20,
+                    bottom: -20,
+                    child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(13)),
+                        child: Image.network(
+                            model.cate.lstImgURL![0].toString(),
+                            width: 90,
+                            height: 90,
+                            alignment: Alignment.center,
+                            fit: BoxFit.fill)
+                        // color: Theme.of(context).backgroundColor,
+                        )),
               ],
             ),
           ),
@@ -63,7 +76,7 @@ class ShoppingCartPage extends StatelessWidget {
                   ),
                   subtitle: Row(
                     children: <Widget>[
-                      TitleText(
+                      const TitleText(
                         text: '\$ ',
                         color: LightColor.red,
                         fontSize: 12,
@@ -75,17 +88,42 @@ class ShoppingCartPage extends StatelessWidget {
                     ],
                   ),
                   trailing: Container(
-                    width: 35,
-                    height: 35,
+                    width: 100,
+                    height: 55,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: LightColor.lightGrey.withAlpha(150),
                         borderRadius: BorderRadius.circular(10)),
-                    child: TitleText(
-                      text: 'x${model.cate.categoryId.toString()}',
-                      fontSize: 12,
-                    ),
-                  )))
+                    child: Column(children: [
+                      TitleText(
+                        text:
+                            'x${model.todate.difference(model.formdate).inDays} days',
+                        fontSize: 12,
+                      ),
+                      Center(
+                        child: Text(
+                          "${DateFormat("dd/MM/yyyy").format(model.formdate)} - ${DateFormat("dd/MM/yyyy").format(model.todate)}",
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ]),
+                  ))),
+          InkWell(
+            child: const Icon(Icons.delete),
+            onTap: () async {
+              if (await confirm(
+                context,
+                title: const Text('Confirm'),
+                content: const Text('Would you like to remove?'),
+                textOK: const Text('Yes'),
+                textCancel: const Text('No'),
+              )) {
+                ui.removeToCart = model;
+                return print('pressedOK');
+              }
+              return print('pressedCancel');
+            },
+          ),
         ],
       ),
     );
@@ -113,7 +151,10 @@ class ShoppingCartPage extends StatelessWidget {
 
   Widget _submitButton(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const CheckOutScreen()));
+      },
       style: ButtonStyle(
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -122,9 +163,9 @@ class ShoppingCartPage extends StatelessWidget {
       ),
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 4),
-        width: AppTheme.fullWidth(context) * .75,
-        child: TitleText(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        width: AppTheme.fullWidth(context) * .85,
+        child: const TitleText(
           text: 'Next',
           color: LightColor.background,
           fontWeight: FontWeight.w500,
@@ -150,13 +191,18 @@ class ShoppingCartPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _cartItems(),
-            Divider(
+            const Divider(
               thickness: 1,
               height: 70,
             ),
             _price(),
-            SizedBox(height: 30),
-            _submitButton(context),
+            const SizedBox(height: 30),
+            Consumer<Cart>(builder: (context, ui, child) {
+              if (ui.cart!.isNotEmpty) {
+                return _submitButton(context);
+              }
+              return Text("");
+            }),
           ],
         ),
       ),

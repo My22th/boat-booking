@@ -26,6 +26,11 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  set removeToCart(CartModel newValue) {
+    _cart.remove(newValue);
+    notifyListeners();
+  }
+
   List<CartModel>? get cart => _cart;
 }
 

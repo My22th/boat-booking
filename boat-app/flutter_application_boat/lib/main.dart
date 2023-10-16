@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'models/ui.dart';
+import 'screen/checkout/checkout_screen.dart';
 import 'screen/home/home_screen.dart';
 import 'screen/home/widget/shopping_cart_screen.dart';
 import 'screen/login/login_screen.dart';
@@ -14,6 +15,7 @@ import 'screen/product/product_detail_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
           ShoppingCartPage.id: (context) => const ShoppingCartPage(),
+          CheckOutScreen.id: (context) => const CheckOutScreen(),
           ProductDetailPage.id: (context) => const ProductDetailPage(
                 cate: null,
               )
