@@ -34,6 +34,19 @@ namespace api_booking_app.Controllers.V1._0
         }
 
         // POST api/<OrdersController>
+        [HttpPost("Booking")]
+        public bool Booking([FromBody] List<BookingRequest> value)
+        {
+            _bookingService._ordersCollection.InsertOne(new Order()
+            {
+                FromDate = value.FirstOrDefault().Fromdate,
+                ToDate = value.FirstOrDefault().Todate,
+                
+            });
+            return true;
+        }
+
+
         [HttpPost]
         public bool Post([FromBody] Order value)
         {
