@@ -1,6 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using Booking_App_WebApi.Model;
+using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace Booking_App_WebApi.Model
 {

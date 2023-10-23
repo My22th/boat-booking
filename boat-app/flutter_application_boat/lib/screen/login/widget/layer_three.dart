@@ -54,6 +54,7 @@ class _LayerThree extends State<LayerThree> {
         String jwt = checklogin(value.toString()).toString();
         if (jwt != "") {
           Consumer<UI>(builder: (context, ui, child) {
+            ui.token = jwt;
             return Text("");
           });
           Navigator.push(context,

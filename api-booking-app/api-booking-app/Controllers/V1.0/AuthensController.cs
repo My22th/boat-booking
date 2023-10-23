@@ -33,8 +33,8 @@ namespace Booking_App_WebApi.Controllers
         {
 
             var customToken = FirebaseApp.DefaultInstance;
-            var dataget = await FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token[0].ToString());
-            string uid = dataget.Uid;
+            var dataget =  FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token.ToString());
+            string uid = dataget.Result.Uid;
 
             var user = await FirebaseAuth.GetAuth(customToken).GetUserAsync(uid);
             var claims = new[] {
@@ -59,38 +59,8 @@ namespace Booking_App_WebApi.Controllers
 
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
-        private User GetUserValid(string token)
-        {
+        
 
-            var user = new User();
-            var mySecret = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
-            var mySecurityKey = new SymmetricSecurityKey(mySecret);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            try
-            {
-                tokenHandler.ValidateToken(token,
-                new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = _config["Jwt:Issuer"],
-                    ValidAudience = _config["Jwt:Audience"],
-                    IssuerSigningKey = mySecurityKey,
-                }, out SecurityToken validatedToken);
-
-                var tokenS = tokenHandler?.ReadToken(token) as JwtSecurityToken;
-                user.Id = tokenS?.Claims?.First(claim => claim.Type == "UserId")?.Value;
-                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "DisplayName")?.Value;
-                user.Phone = tokenS?.Claims?.First(claim => claim.Type == "Phone")?.Value;
-               
-            }
-            catch
-            {
-                return new User();
-            }
-            return user;
-        }
     }
 
    

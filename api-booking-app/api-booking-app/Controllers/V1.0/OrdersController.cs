@@ -1,8 +1,11 @@
 ﻿using api_booking_app.Model;
+using api_booking_app.Utils;
+using Booking_App_WebApi.Controllers;
 using Booking_App_WebApi.Model;
 using Booking_App_WebApi.Model.MongoDBFD;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using NuGet.Packaging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,11 +41,19 @@ namespace api_booking_app.Controllers.V1._0
         [HttpPost("Booking")]
         public ActionResult Booking([FromBody] List<BookingRequest> value)
         {
-            var token = Request.Headers["XYZComponent"].ToString();
-
+            var token = Request.Headers["Authorization"].ToString();
+            var user = new BaseClass().GetUserValid(token);
+            if (string.IsNullOrEmpty(user.UserEmail))
+            {
+                return new JsonResult(new
+                {
+                    code = 400,
+                    msg = "Not Authen"
+                });
+            }
             bool isError = false;
             string message = string.Empty;
-
+            var lstTemp = new List<Order>();
             foreach (var item in value)
             {
                 if (item.Fromdate < DateTime.Now)
@@ -60,7 +71,7 @@ namespace api_booking_app.Controllers.V1._0
                 }
                 var filter = Builders<Order>.Filter.Gte(x => x.FromDate, item.Fromdate);
                 filter &= Builders<Order>.Filter.Lte(x => x.ToDate, item.Todate);
-                var lstorder = _bookingService._ordersCollection.FindAsync(filter).Result.ToList();
+                var lstorder = _bookingService._ordersCollection.FindAsync(filter).Result.ToList().Concat(lstTemp);
                 var lstexclude = lstorder.Select(x => x.BoatId).ToArray();
                 var resultPRodcut = _bookingService._catesCollection.Aggregate()
                     .Lookup<Category, Product, LookedUpCate>(_bookingService._productsCollection,
@@ -68,43 +79,60 @@ namespace api_booking_app.Controllers.V1._0
                         y => y.CategoryId,
                         y => y.InnerProducts
                 ).ToList().Where(x => x.InnerProducts.Any() && !x.InnerProducts.Select(y => y.BoatId).ToArray().Intersect(lstexclude).Any()).FirstOrDefault();
-                if (resultPRodcut == null || resultPRodcut.InnerProducts.Count()==0)
+                if (resultPRodcut == null || resultPRodcut.InnerProducts.Count() == 0)
                 {
                     isError = true;
-                    message = "Item "+item.CategoryId+" Out of stock";
+                    message = "Item " + item.CategoryId + " Out of stock";
                     break;
                 }
-                //_bookingService._ordersCollection.
-                
+                lstTemp.Add(new Order
+                {
+                    BoatId = resultPRodcut.InnerProducts.First().BoatId,
+                    FromDate = item.Fromdate,
+                    ToDate = item.Todate,
+                    BookingDate = DateTime.Now,
+                    CustomerEmail = user.UserEmail,
+                    CustomerName = user.UserName,
+                });
 
             }
-
-        
-            return new JsonResult(new
+            if (isError)
             {
-                code = 200,
-                msg=""
-            });
+                return new JsonResult(new
+                {
+                    code = 400,
+                    msg = message
+                });
+            }
+            else
+            {
+              var data =  _bookingService._ordersCollection.InsertManyAsync(lstTemp);
+                return new JsonResult(new
+                {
+                    code = 200,
+                    msg = "Order Success"
+                });
+            }
         }
 
 
-[HttpPost]
-public bool Post([FromBody] Order value)
-{
-    _bookingService._ordersCollection.InsertOne(value);
-    return true;
-}
+        [HttpPost]
+        public bool Post([FromBody] Order value)
+        {
+            _bookingService._ordersCollection.InsertOne(value);
+            return true;
+        }
 
-// PUT api/<OrdersController>/5
-[HttpPut("{id}")]
-public void Put(int id, [FromBody] string value)
-{
-}
+        // PUT api/<OrdersController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-// DELETE api/<OrdersController>/5
-[HttpDelete("{id}")]
-public void Delete(int id)
-{
-}
+        // DELETE api/<OrdersController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 }
