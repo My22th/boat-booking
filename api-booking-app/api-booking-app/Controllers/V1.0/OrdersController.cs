@@ -19,9 +19,14 @@ namespace api_booking_app.Controllers.V1._0
     public class OrdersController : ControllerBase
     {
         private readonly BookingService _bookingService;
-        public OrdersController(BookingService bookingService)
+
+        private IConfiguration _config;
+
+       
+        public OrdersController(BookingService bookingService, IConfiguration configuration)
         {
             _bookingService = bookingService;
+            _config = configuration;
         }
         // GET: api/<OrdersController>
         [HttpGet]
@@ -42,7 +47,7 @@ namespace api_booking_app.Controllers.V1._0
         public ActionResult Booking([FromBody] List<BookingRequest> value)
         {
             var token = Request.Headers["Authorization"].ToString();
-            var user = new BaseClass().GetUserValid(token);
+            var user = new BaseClass(_config).GetUserValid(token);
             if (string.IsNullOrEmpty(user.UserEmail))
             {
                 return new JsonResult(new

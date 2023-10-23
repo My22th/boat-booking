@@ -11,13 +11,13 @@ namespace api_booking_app.Utils
 
         public BaseClass()
         {
-        }
 
+        }
         public BaseClass(IConfiguration config)
         {
             _config = config;
         }
-        public User GetUserValid(string token)
+        public User GetUserValid(string token )
         {
 
             var user = new User();
@@ -30,6 +30,7 @@ namespace api_booking_app.Utils
                 new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
+                    
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidIssuer = _config["Jwt:Issuer"],
@@ -39,7 +40,8 @@ namespace api_booking_app.Utils
 
                 var tokenS = tokenHandler?.ReadToken(token) as JwtSecurityToken;
                 user.Id = tokenS?.Claims?.First(claim => claim.Type == "UserId")?.Value;
-                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "DisplayName")?.Value;
+                user.UserEmail = tokenS?.Claims?.First(claim => claim.Type == "Email")?.Value;
+                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "Name")?.Value;
                 user.Phone = tokenS?.Claims?.First(claim => claim.Type == "Phone")?.Value;
 
             }

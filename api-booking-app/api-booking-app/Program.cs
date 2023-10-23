@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using static Lucene.Net.Index.SegmentReader;
 using static System.Net.Mime.MediaTypeNames;
@@ -51,6 +52,7 @@ builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSingleton<BookingService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -107,7 +109,7 @@ builder.Services.AddApiVersioning(
     o.SubstituteApiVersionInUrl = true;
 });
 var app = builder.Build();
-
+_ = new JwtPayload();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
