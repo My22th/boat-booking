@@ -76,6 +76,7 @@ namespace api_booking_app.Controllers.V1._0
                 }
                 var filter = Builders<Order>.Filter.Gte(x => x.FromDate, item.Fromdate);
                 filter &= Builders<Order>.Filter.Lte(x => x.ToDate, item.Todate);
+               
                 var lstorder = _bookingService._ordersCollection.FindAsync(filter).Result.ToList().Concat(lstTemp);
                 var lstexclude = lstorder.Select(x => x.BoatId).ToArray();
                 var resultPRodcut = _bookingService._catesCollection.Aggregate()
@@ -83,21 +84,25 @@ namespace api_booking_app.Controllers.V1._0
                         x => x.CategoryId,
                         y => y.CategoryId,
                         y => y.InnerProducts
-                ).ToList().Where(x => x.InnerProducts.Any() && !x.InnerProducts.Select(y => y.BoatId).ToArray().Intersect(lstexclude).Any()).FirstOrDefault();
-                if (resultPRodcut == null || resultPRodcut.InnerProducts.Count() == 0)
+                ).ToList().Where(x => x.CategoryId == item.CategoryId && x.InnerProducts.Any()).FirstOrDefault();
+                var lstgetpd= resultPRodcut?.InnerProducts?.Where(x => !lstexclude.Contains(x.BoatId)).ToList();
+                if (lstgetpd == null || lstgetpd.Count() == 0)
                 {
                     isError = true;
                     message = "Item " + item.CategoryId + " Out of stock";
                     break;
                 }
+                if(lstgetpd.Count>0)
                 lstTemp.Add(new Order
                 {
-                    BoatId = resultPRodcut.InnerProducts.First().BoatId,
+                    BoatId = lstgetpd.First().BoatId,
                     FromDate = item.Fromdate,
                     ToDate = item.Todate,
                     BookingDate = DateTime.Now,
                     CustomerEmail = user.UserEmail,
                     CustomerName = user.UserName,
+                    Price = lstgetpd.First().PricePerHour,
+                    
                 });
 
             }
