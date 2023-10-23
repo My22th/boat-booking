@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/title_text.dart';
+import '../../../data_source/api_service.dart';
 import '../../../models/ui.dart';
 import '../../../themes/light_color.dart';
 import '../../../themes/theme.dart';
-import '../../checkout/checkout_screen.dart';
 
 class ShoppingCartPage extends StatelessWidget {
   static var id = "shoppingcart_page";
@@ -149,11 +149,18 @@ class ShoppingCartPage extends StatelessWidget {
     });
   }
 
-  Widget _submitButton(BuildContext context) {
+  Widget _submitButton(
+      BuildContext context, List<CartModel>? cart, String userToken) {
     return TextButton(
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CheckOutScreen()));
+      onPressed: () async {
+        BookingRes bks = BookingRes(isErr: false, mess: "");
+        var data = await ApiService().booking(cart!, userToken).then((value) {
+          bks = value;
+        });
+        print("OrderRes:${bks.mess}");
+
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const CheckOutScreen()));
       },
       style: ButtonStyle(
         shape: MaterialStateProperty.all(
@@ -197,9 +204,11 @@ class ShoppingCartPage extends StatelessWidget {
             ),
             _price(),
             const SizedBox(height: 30),
-            Consumer<Cart>(builder: (context, ui, child) {
-              if (ui.cart!.isNotEmpty) {
-                return _submitButton(context);
+            Consumer<Cart>(builder: (context, uis, child) {
+              if (uis.cart!.isNotEmpty) {
+                return Consumer<UI>(builder: (context, ui, child) {
+                  return _submitButton(context, uis.cart, ui.userToken);
+                });
               }
               return Text("");
             }),

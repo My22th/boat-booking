@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_application_boat/models/cart_model.dart';
 import 'package:flutter_application_boat/models/cate_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -67,5 +68,35 @@ class ApiService {
       print(e.toString());
     }
     return List.empty();
+  }
+
+  Future<BookingRes> booking(List<CartModel> lstItem, String userToken) async {
+    try {
+      Dio dio = Dio();
+      List<BookingRequest> lstbk = new List.empty(growable: true);
+      for (var e in lstItem) {
+        lstbk.add(BookingRequest(
+            categoryId: e.cate.categoryId!,
+            fromDate: e.formdate,
+            toDate: e.todate));
+      }
+      var das = jsonEncode(lstbk.map((e) => e.toJson()).toList());
+      var response = await dio.post("${dotenv.env['API_URL']!}orders/booking",
+          data: das,
+          options: Options(headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.acceptHeader: "*/*",
+            HttpHeaders.authorizationHeader: userToken
+          }, contentType: "application/json", followRedirects: false));
+
+      if (response.data["code"] == 200) {
+        return BookingRes(isErr: false, mess: "OrderSuccess");
+      } else {
+        return BookingRes(isErr: true, mess: response.data["msg"]);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return BookingRes(isErr: true, mess: "Error Fromserver");
   }
 }
