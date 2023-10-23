@@ -11,7 +11,7 @@ class ApiService {
     try {
       Dio dio = Dio();
 
-      var response = await dio.post(dotenv.env['VAR_NAME']! + "authens",
+      var response = await dio.post("${dotenv.env['API_URL']!}authens",
           data: '"' + myToken + '"',
           options: Options(
               headers: {

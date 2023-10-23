@@ -3,10 +3,17 @@ import 'package:flutter_application_boat/models/cart_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UI with ChangeNotifier {
+  String _token = "";
+
   final bool _isDark = false;
   GoogleSignInAccount? _account;
   set isDark(newValue) {
     isDark = newValue;
+    notifyListeners();
+  }
+
+  set token(newValue) {
+    _token = newValue;
     notifyListeners();
   }
 
@@ -16,6 +23,7 @@ class UI with ChangeNotifier {
   }
 
   bool get darkMode => _isDark;
+  String get userToken => _token;
   GoogleSignInAccount? get account => _account;
 }
 

@@ -53,6 +53,9 @@ class _LayerThree extends State<LayerThree> {
       FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
         String jwt = checklogin(value.toString()).toString();
         if (jwt != "") {
+          Consumer<UI>(builder: (context, ui, child) {
+            return Text("");
+          });
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const HomeScreen()));
         }

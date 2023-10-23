@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Booking_App_WebApi.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -58,6 +59,39 @@ namespace Booking_App_WebApi.Controllers
 
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
+        private User GetUserValid(string token)
+        {
 
+            var user = new User();
+            var mySecret = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            var mySecurityKey = new SymmetricSecurityKey(mySecret);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = _config["Jwt:Issuer"],
+                    ValidAudience = _config["Jwt:Audience"],
+                    IssuerSigningKey = mySecurityKey,
+                }, out SecurityToken validatedToken);
+
+                var tokenS = tokenHandler?.ReadToken(token) as JwtSecurityToken;
+                user.Id = tokenS?.Claims?.First(claim => claim.Type == "UserId")?.Value;
+                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "DisplayName")?.Value;
+                user.Phone = tokenS?.Claims?.First(claim => claim.Type == "Phone")?.Value;
+               
+            }
+            catch
+            {
+                return new User();
+            }
+            return user;
+        }
     }
+
+   
 }

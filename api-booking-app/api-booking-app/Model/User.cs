@@ -43,4 +43,6 @@ namespace Booking_App_WebApi.Model
         Admin,
         Manager
     }
+
+
 }

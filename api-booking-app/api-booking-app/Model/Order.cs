@@ -57,4 +57,10 @@ namespace Booking_App_WebApi.Model
         public string Paymentname { get; set; }
         public int Status { get; set; }
     }
+    public class BookingRequest
+    {
+        public int CategoryId { get; set; }
+        public DateTime Fromdate { get; set; }
+        public DateTime Todate { get; set; }
+    }
 }
