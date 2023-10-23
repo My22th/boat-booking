@@ -41,7 +41,7 @@ namespace api_booking_app.Utils
                 var tokenS = tokenHandler?.ReadToken(token) as JwtSecurityToken;
                 user.Id = tokenS?.Claims?.First(claim => claim.Type == "UserId")?.Value;
                 user.UserEmail = tokenS?.Claims?.First(claim => claim.Type == "Email")?.Value;
-                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "Name")?.Value;
+                user.UserName = tokenS?.Claims?.First(claim => claim.Type == "DisplayName")?.Value;
                 user.Phone = tokenS?.Claims?.First(claim => claim.Type == "Phone")?.Value;
 
             }

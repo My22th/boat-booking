@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "708740677078",
+    "firebase_url": "https://boatbooking-a2b5e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "boatbooking-a2b5e",
+    "storage_bucket": "boatbooking-a2b5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708740677078:android:2c08eca2059a1bd3033877",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_boat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708740677078-5n1p09etdfmd5d1v423bflk6dd2a39ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXPjt55NOPIqjXDLX863ih8wDAoJQcK90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708740677078-5n1p09etdfmd5d1v423bflk6dd2a39ep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "708740677078-488alns32p8v2krjv08t8l5k40f2fdqp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "boat-booking-ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
