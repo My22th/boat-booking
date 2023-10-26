@@ -44,9 +44,6 @@ class _MyCheckout extends State<CheckOutScreen> {
     setState(() {
       if (res["errorCode"] == 1) {
         payResult = "Thanh toán thành công";
-        Consumer<Cart>(builder: (context, ui, child) {
-          return Text("");
-        });
       } else if (res["errorCode"] == 4) {
         payResult = "User hủy thanh toán";
       } else {

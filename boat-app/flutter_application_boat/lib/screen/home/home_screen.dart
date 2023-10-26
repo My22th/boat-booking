@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 title: 'Home',
                               )
                             : currentpage == CurrentPage.cart
-                                ? const ShoppingCartPage()
+                                ? ShoppingCartPage()
                                 : const Align(
                                     alignment: Alignment.topCenter,
                                     child: null,

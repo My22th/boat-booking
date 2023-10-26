@@ -1,19 +1,70 @@
+import 'dart:io';
+
 import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_boat/models/cart_model.dart';
+import 'package:flutter_application_boat/screen/home/widget/home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/title_text.dart';
 import '../../../data_source/api_service.dart';
 import '../../../models/ui.dart';
+import '../../../repo/payment.dart';
 import '../../../themes/light_color.dart';
 import '../../../themes/theme.dart';
+import '../home_screen.dart';
 
-class ShoppingCartPage extends StatelessWidget {
+class ShoppingCartPage extends StatefulWidget {
   static var id = "shoppingcart_page";
 
-  const ShoppingCartPage({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _ShoppingCart();
+  // TODO: implement createState
+}
+
+class _ShoppingCart extends State<ShoppingCartPage> {
+  @override
+  static const EventChannel eventChannel =
+      EventChannel('flutter.native/eventPayOrder');
+  static const MethodChannel platform =
+      MethodChannel('flutter.native/channelPayOrder');
+  final textStyle = TextStyle(color: Colors.black54);
+  final valueStyle = TextStyle(
+      color: Colors.black45, fontSize: 18.0, fontWeight: FontWeight.w400);
+  String zpTransToken = "";
+  String payResult = "";
+  String payAmount = "10000";
+  bool showResult = false;
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isIOS) {
+      eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
+    }
+  }
+
+  void _onEvent(dynamic event) {
+    print("_onEvent: '$event'.");
+    var res = Map<String, dynamic>.from(event);
+    setState(() {
+      if (res["errorCode"] == 1) {
+        payResult = "Thanh toán thành công";
+      } else if (res["errorCode"] == 4) {
+        payResult = "User hủy thanh toán";
+      } else {
+        payResult = "Giao dịch thất bại";
+      }
+    });
+  }
+
+  void _onError(Object error) {
+    print("_onError: '$error'.");
+    setState(() {
+      payResult = "Giao dịch thất bại";
+    });
+  }
 
   Widget _cartItems() {
     return Consumer<Cart>(builder: (context, ui, child) {
@@ -150,13 +201,85 @@ class ShoppingCartPage extends StatelessWidget {
   }
 
   Widget _submitButton(
-      BuildContext context, List<CartModel>? cart, String userToken) {
+      BuildContext context, Cart uis, String userToken, int paytype) {
     return TextButton(
       onPressed: () async {
         BookingRes bks = BookingRes(isErr: false, mess: "");
-        var data = await ApiService().booking(cart!, userToken).then((value) {
+        await ApiService().booking(uis.cart!, userToken).then((value) {
           bks = value;
         });
+        if (bks.isErr) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: TitleText(text: bks.mess.toString(), fontSize: 20),
+                actions: [
+                  TextButton(
+                    child: const Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          uis.clearCart = true;
+          if (paytype == 0) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: TitleText(text: bks.mess.toString(), fontSize: 20),
+                  actions: [
+                    TextButton(
+                      child: const Text("Order success"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+            Navigator.push(context,
+                MaterialPageRoute(builder: (contexts) => const HomeScreen()));
+          } else {
+            var result = await createOrder(120000);
+            if (result != null) {
+              // Navigator.pop(context);
+              zpTransToken = result.zptranstoken;
+              setState(() {
+                zpTransToken = result.zptranstoken;
+                showResult = true;
+              });
+              String response = "";
+              try {
+                final String resultrs = await platform
+                    .invokeMethod('payOrder', {"zptoken": result.zptranstoken});
+                response = resultrs;
+                print("payOrder Result: '$resultrs'.");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            title: '',
+                          )),
+                );
+              } on PlatformException catch (e) {
+                print("Failed to Invoke: '${e.message}'.");
+                response = "Thanh toán thất bại";
+              }
+              print(response);
+              if (response == "Payment Success") {}
+              setState(() {
+                payResult = response;
+              });
+            }
+          }
+        }
         print("OrderRes:${bks.mess}");
 
         // Navigator.push(context,
@@ -166,14 +289,15 @@ class ShoppingCartPage extends StatelessWidget {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         ),
-        backgroundColor: MaterialStateProperty.all<Color>(LightColor.orange),
+        backgroundColor: MaterialStateProperty.all<Color>(
+            paytype == 0 ? LightColor.grey : LightColor.skyBlue),
       ),
       child: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 4),
         width: AppTheme.fullWidth(context) * .85,
-        child: const TitleText(
-          text: 'Next',
+        child: TitleText(
+          text: paytype == 0 ? 'Pay with cash' : 'Pay with zalopay',
           color: LightColor.background,
           fontWeight: FontWeight.w500,
         ),
@@ -207,7 +331,10 @@ class ShoppingCartPage extends StatelessWidget {
             Consumer<Cart>(builder: (context, uis, child) {
               if (uis.cart!.isNotEmpty) {
                 return Consumer<UI>(builder: (context, ui, child) {
-                  return _submitButton(context, uis.cart, ui.userToken);
+                  return Column(children: [
+                    _submitButton(context, uis, ui.userToken, 0),
+                    _submitButton(context, uis, ui.userToken, 1)
+                  ]);
                 });
               }
               return Text("");

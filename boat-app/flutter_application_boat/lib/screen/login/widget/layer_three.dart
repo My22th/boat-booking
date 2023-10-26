@@ -26,40 +26,36 @@ class _LayerThree extends State<LayerThree> {
 
   bool isChecked = false;
 
-  checklogin(String token) async {
-    var jwtoken = "";
-    await ApiService().fetchJWTTokenUser(token).then((value) {
-      jwtoken = value;
-    });
-    print("Tokessss:" + jwtoken);
+  checklogin(token) async {
+    var jwtoken = await ApiService().fetchJWTTokenUser(token);
     return jwtoken;
   }
 
-  listenlogin() {
+  listenlogin(UI ui) {
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
-      initfirebase(user);
+      initfirebase(user, ui);
     });
-    FirebaseAuth.instance.userChanges().listen((User? user) {
-      initfirebase(user);
-    });
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      initfirebase(user);
-    });
+    // FirebaseAuth.instance.userChanges().listen((User? user) {
+    //   initfirebase(user);
+    // });
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   initfirebase(user);
+    // });
   }
 
-  initfirebase(User? user) {
+  initfirebase(User? user, UI ui) {
     if (user == null) {
       print('User is currently signed out!');
     } else {
-      FirebaseAuth.instance.currentUser!.getIdToken().then((value) {
-        String jwt = checklogin(value.toString()).toString();
+      FirebaseAuth.instance.currentUser!.getIdToken().then((value) async {
+        var jwt = await checklogin(value.toString());
         if (jwt != "") {
-          Consumer<UI>(builder: (context, ui, child) {
+          try {
             ui.token = jwt;
+            Navigator.push(context,
+                MaterialPageRoute(builder: (contexts) => const HomeScreen()));
             return Text("");
-          });
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          } catch (e) {}
         }
       });
 
@@ -233,7 +229,7 @@ class _LayerThree extends State<LayerThree> {
                                 await FirebaseAuth.instance
                                     .signInWithCredential(credential);
 
-                                listenlogin();
+                                listenlogin(ui);
                               });
                             });
                           },

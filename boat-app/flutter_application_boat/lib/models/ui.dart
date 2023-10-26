@@ -34,6 +34,11 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  set clearCart(bool newValue) {
+    _cart.clear();
+    notifyListeners();
+  }
+
   set removeToCart(CartModel newValue) {
     _cart.remove(newValue);
     notifyListeners();

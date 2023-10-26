@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
-          ShoppingCartPage.id: (context) => const ShoppingCartPage(),
+          ShoppingCartPage.id: (context) => ShoppingCartPage(),
           CheckOutScreen.id: (context) => const CheckOutScreen(),
           ProductDetailPage.id: (context) => const ProductDetailPage(
                 cate: null,

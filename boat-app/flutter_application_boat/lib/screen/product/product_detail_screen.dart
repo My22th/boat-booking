@@ -403,8 +403,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             ),
           ),
           onPressed: () {
-            if (ui.cart!
-                .any((s) => s.cate.categoryId == widget.cate!.categoryId)) {
+            if (ui.cart!.any((s) =>
+                s.cate.categoryId == widget.cate!.categoryId &&
+                (s.formdate == fromdate && s.todate == todate))) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
