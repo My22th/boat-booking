@@ -66,5 +66,5 @@ flutter {
 }
 
 dependencies {implementation 'androidx.multidex:multidex:2.0.1'
-    implementation files('C:\\Users\\Long\\Downloads\\zpdk-release-v3.1.aar')
+    implementation files('C:\\Users\\longl\\Downloads\\zpdk-release-v3.1.aar')
 }

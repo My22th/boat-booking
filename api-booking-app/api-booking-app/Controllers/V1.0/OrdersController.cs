@@ -61,17 +61,17 @@ namespace api_booking_app.Controllers.V1._0
             var lstTemp = new List<Order>();
             foreach (var item in value)
             {
-                if (item.Fromdate < DateTime.Now)
+                if (item.Fromdate.AddHours(23) < DateTime.Now)
                 {
                     isError = true;
-                    message = "Cannot detect date of item " + item.CategoryId;
+                    message = "Cannot detect from date of item " + item.CategoryId;
                     break;
 
                 }
-                if (item.Todate < DateTime.Now)
+                if (item.Todate.AddHours(23) < DateTime.Now)
                 {
                     isError = true;
-                    message = "Cannot detect date of item " + item.CategoryId;
+                    message = "Cannot detect to date of item " + item.CategoryId;
                     break;
                 }
                 var filter = Builders<Order>.Filter.Gte(x => x.FromDate, item.Fromdate);
@@ -89,7 +89,8 @@ namespace api_booking_app.Controllers.V1._0
                 if (lstgetpd == null || lstgetpd.Count() == 0)
                 {
                     isError = true;
-                    message = "Item " + item.CategoryId + " Out of stock";
+                   var cate = _bookingService._catesCollection.Find(x => x.CategoryId == item.CategoryId).FirstOrDefault();
+                    message = "Item " + cate.Name +" form "+item.Fromdate.ToString("dd/MM") +" - "+ item.Todate.ToString("dd/MM") + " Out of stock";
                     break;
                 }
                 if(lstgetpd.Count>0)

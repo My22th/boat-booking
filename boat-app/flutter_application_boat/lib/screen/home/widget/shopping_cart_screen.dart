@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:confirm_dialog/confirm_dialog.dart';
@@ -261,22 +263,53 @@ class _ShoppingCart extends State<ShoppingCartPage> {
                     .invokeMethod('payOrder', {"zptoken": result.zptranstoken});
                 response = resultrs;
                 print("payOrder Result: '$resultrs'.");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(
-                            title: '',
-                          )),
-                );
               } on PlatformException catch (e) {
                 print("Failed to Invoke: '${e.message}'.");
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content:
+                          TitleText(text: bks.mess.toString(), fontSize: 20),
+                      actions: [
+                        TextButton(
+                          child: const Text("Payment Fail"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
                 response = "Thanh toán thất bại";
               }
               print(response);
-              if (response == "Payment Success") {}
+
               setState(() {
                 payResult = response;
               });
+
+              if (response == "Payment Success") {
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content:
+                          TitleText(text: bks.mess.toString(), fontSize: 20),
+                      actions: [
+                        TextButton(
+                          child: const Text("Payment Fail"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             }
           }
         }

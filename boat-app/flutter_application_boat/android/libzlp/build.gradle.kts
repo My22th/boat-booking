@@ -7,5 +7,5 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_7
 }
 dependencies {
-    implementation(files("C:\\Users\\Long\\Downloads\\zpdk-release-v3.1.aar"))
+    implementation(files("C:\\Users\\longl\\Downloads\\zpdk-release-v3.1.aar"))
 }
