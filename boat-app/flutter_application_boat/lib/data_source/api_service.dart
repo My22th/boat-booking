@@ -106,7 +106,7 @@ class ApiService {
       Dio dio = Dio();
       List<Order> lstors = new List.empty(growable: true);
 
-      var response = await dio.get("${dotenv.env['API_URL']!}orders/FindOrders",
+      var response = await dio.get("${dotenv.env['API_URL']!}orders",
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: "application/json",
             HttpHeaders.acceptHeader: "*/*",
@@ -114,16 +114,37 @@ class ApiService {
           }, contentType: "application/json", followRedirects: false));
 
       if (response.data["code"] == 200) {
-        jsonDecode(response.data["msg"]).forEach((json) => {
-              lstors.add(Order(
-                boatId: json['BoatId'],
-                bookingDate: json['BookingDate'] as DateTime,
-                fromDate: json['FromDate'] as DateTime,
-                toDate: json['ToDate'] as DateTime,
-                price: json['Price'],
-                paymentType: json['PaymentType'],
-              ))
-            });
+        var datas = response.data["msg"] as List<dynamic>;
+
+        for (var element in datas) {
+          print(element);
+          lstors.add(Order(
+            boatId: element['BoatId'],
+            bookingDate: element['BookingDate'] == null
+                ? DateTime.now()
+                : element['BookingDate'] as DateTime,
+            fromDate: element['FromDate'] == null
+                ? DateTime.now()
+                : element['FromDate'] as DateTime,
+            toDate: element['ToDate'] == null
+                ? DateTime.now()
+                : element['ToDate'] as DateTime,
+            price: element['Price'],
+            boatName: element['BoatName'],
+            paymentType: element['PaymentType'],
+          ));
+          // jsonDecode(element).forEach((json) => {
+          //       print(json)
+          //       // lstors.add(Order(
+          //       //   boatId: json['BoatId'],
+          //       //   bookingDate: json['BookingDate'] as DateTime,
+          //       //   fromDate: json['FromDate'] as DateTime,
+          //       //   toDate: json['ToDate'] as DateTime,
+          //       //   price: json['Price'],
+          //       //   paymentType: json['PaymentType'],
+          //       // ))
+          //     });
+        }
 
         return lstors;
       } else {

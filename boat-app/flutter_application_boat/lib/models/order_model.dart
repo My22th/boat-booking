@@ -1,6 +1,7 @@
 class Order {
   int? orderId;
   int? boatId;
+  String? boatName;
   int? userId;
   DateTime? bookingDate;
   DateTime? fromDate;
@@ -18,6 +19,7 @@ class Order {
   Order(
       {this.orderId,
       this.boatId,
+      this.boatName,
       this.userId,
       this.bookingDate,
       this.fromDate,

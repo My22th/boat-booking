@@ -12,6 +12,7 @@ namespace Booking_App_WebApi.Model
         public ObjectId _Id { get; set; }
         public int OrderId { get; set; }
         public int BoatId { get; set; }
+        public string? BoatName { get; set; }
         public int Userid { get; set; }
         public DateTime BookingDate { get; set; }
 

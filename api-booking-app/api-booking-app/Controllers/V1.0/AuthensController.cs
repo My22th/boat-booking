@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Booking_App_WebApi.Model;
+using api_booking_app.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,11 +30,11 @@ namespace Booking_App_WebApi.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> GenerateJSONWebTokenAsync([FromBody] string _token)
+        public async Task<ActionResult> GenerateJSONWebTokenAsync([FromBody] TokenAuthenRequest _token)
         {
 
             var customToken = FirebaseApp.DefaultInstance;
-            var dataget =  FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token.ToString());
+            var dataget =  FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token.Token.ToString());
             string uid = dataget.Result.Uid;
 
             var user = await FirebaseAuth.GetAuth(customToken).GetUserAsync(uid);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_boat/models/order_model.dart';
 import 'package:flutter_application_boat/screen/home/widget/apoinmentcart.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data_source/api_service.dart';
@@ -15,80 +16,74 @@ class _HistoryOrder extends State<HistoryOrder> {
   List<Order> hisOrder = new List.empty(growable: true);
 
   @override
-  void initState() {
-    setState(() async {
-      var token = "";
-      Consumer<UI>(builder: (context, ui, child) {
-        token = ui.userToken;
-
-        return Text("");
-      });
-      await ApiService().getorders(token).then((value) {
-        hisOrder = value;
-      });
+  Widget build(BuildContext context) {
+    return Consumer<UI>(builder: (context, ui, child) {
+      return Container(
+          child: FutureBuilder<List<Order>>(
+        future: ApiService().getorders(ui.userToken),
+        builder: (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.connectionState == ConnectionState.none) {
+            return const Center(
+              child: Text('An error occurred!'),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              if (snapshot.error != null) {
+                // ...
+                // Do error handling stuff
+                return const Center(
+                  child: Text('An error occurred!'),
+                );
+              } else {
+                List<Order> data = snapshot.data!;
+                return CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: _renderItem(data),
+                );
+              }
+            } else {
+              return Text("You don have orders");
+            }
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ));
     });
-    // userinfo = "response";
-
-    super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
-              child: Text(
-                "Next Appointments",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600),
-              ),
+  List<Widget> _renderItem(List<Order> data) {
+    List<Widget> widgets = List.empty(growable: true);
+    for (var element in data) {
+      widgets.addAll(<Widget>[
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+            child: Text(
+              DateFormat("dd/MM/yyyy")
+                  .format(element.bookingDate ?? DateTime.now())
+                  .toString(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                AppointmentCard(
-                  name: "Dorothy Nelson",
-                  dateTime: "09 Jan 2020, 8am - 10am",
-                  padding: 16,
-                ),
-                AppointmentCard(
-                  name: "Carl Pope",
-                  dateTime: "09 Jan 2020, 11am - 02pm",
-                  padding: 16,
-                ),
-                AppointmentCard(
-                  name: "Ora Murray",
-                  dateTime: "10 Jan 2020, 9am - 10am",
-                  padding: 16,
-                ),
-                AppointmentCard(
-                  name: "Dorothy Nelson",
-                  dateTime: "09 Jan 2020, 8am - 10am",
-                  padding: 16,
-                ),
-                AppointmentCard(
-                  name: "Carl Pope",
-                  dateTime: "09 Jan 2020, 11am - 02pm",
-                  padding: 16,
-                ),
-                AppointmentCard(
-                  name: "Ora Murray",
-                  dateTime: "10 Jan 2020, 9am - 10am",
-                  padding: 16,
-                ),
-              ],
-            ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              AppointmentCard(
+                name: "" + element.boatName!.toString(),
+                dateTime: "09 Jan 2020, 8am - 10am",
+                padding: 16,
+              )
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+      ]);
+    }
+    return widgets;
   }
 }

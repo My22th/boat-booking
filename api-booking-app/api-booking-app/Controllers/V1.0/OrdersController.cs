@@ -29,7 +29,7 @@ namespace api_booking_app.Controllers.V1._0
             _config = configuration;
         }
         // GET: api/<OrdersController>
-        [HttpGet]
+        [HttpGet("FindOrders")]
         public ActionResult FindOrders()
         {
             var token = Request.Headers["Authorization"].ToString();
