@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\longl\\Desktop\\booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\longl\\Desktop\\booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
+    "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\longl\\Desktop\\booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "projectUniqueName": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
         "projectName": "api-booking-app",
-        "projectPath": "C:\\Users\\longl\\Desktop\\booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
-        "packagesPath": "C:\\Users\\longl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\longl\\Desktop\\booking\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
+        "projectPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\api-booking-app.csproj",
+        "packagesPath": "C:\\Users\\Long\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Long\\Desktop\\boat-booking\\boat-booking\\api-booking-app\\api-booking-app\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\longl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Long\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -131,7 +126,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

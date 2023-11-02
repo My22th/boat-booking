@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_application_boat/models/cart_model.dart';
 import 'package:flutter_application_boat/models/cate_model.dart';
+import 'package:flutter_application_boat/models/order_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiService {
@@ -73,7 +74,7 @@ class ApiService {
   Future<BookingRes> booking(List<CartModel> lstItem, String userToken) async {
     try {
       Dio dio = Dio();
-      List<BookingRequest> lstbk = new List.empty(growable: true);
+      List<BookingRequest> lstbk = List.empty(growable: true);
       for (var e in lstItem) {
         lstbk.add(BookingRequest(
             categoryId: e.cate.categoryId!,
@@ -98,5 +99,39 @@ class ApiService {
       print(e.toString());
     }
     return BookingRes(isErr: true, mess: "Error Fromserver");
+  }
+
+  Future<List<Order>> getorders(String userToken) async {
+    try {
+      Dio dio = Dio();
+      List<Order> lstors = new List.empty(growable: true);
+
+      var response = await dio.get("${dotenv.env['API_URL']!}orders/FindOrders",
+          options: Options(headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.acceptHeader: "*/*",
+            HttpHeaders.authorizationHeader: userToken
+          }, contentType: "application/json", followRedirects: false));
+
+      if (response.data["code"] == 200) {
+        jsonDecode(response.data["msg"]).forEach((json) => {
+              lstors.add(Order(
+                boatId: json['BoatId'],
+                bookingDate: json['BookingDate'] as DateTime,
+                fromDate: json['FromDate'] as DateTime,
+                toDate: json['ToDate'] as DateTime,
+                price: json['Price'],
+                paymentType: json['PaymentType'],
+              ))
+            });
+
+        return lstors;
+      } else {
+        return List.empty(growable: true);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return List.empty(growable: true);
   }
 }

@@ -9,6 +9,7 @@ import '../../models/base_model.dart';
 import '../../models/ui.dart';
 import '../../themes/light_color.dart';
 import '../../themes/theme.dart';
+import 'widget/history_order_page.dart';
 import 'widget/home_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: currentpage.index == 0
                       ? "Our"
                       : currentpage.index == 1
-                          ? "Follow"
+                          ? "History"
                           : "Your",
                   fontSize: 27,
                   fontWeight: FontWeight.w400,
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   text: currentpage.index == 0
                       ? "Products"
                       : currentpage.index == 1
-                          ? "Product"
+                          ? "Orderds"
                           : currentpage.index == 2
                               ? "Cart"
                               : "Information",
@@ -159,10 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             : currentpage == CurrentPage.cart
                                 ? ShoppingCartPage()
-                                : const Align(
-                                    alignment: Alignment.topCenter,
-                                    child: null,
-                                  ),
+                                : currentpage == CurrentPage.flollow
+                                    ? HistoryOrder()
+                                    : const Align(
+                                        alignment: Alignment.topCenter,
+                                        child: null,
+                                      ),
                       ),
                     )
                   ],

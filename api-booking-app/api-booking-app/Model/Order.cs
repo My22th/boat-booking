@@ -26,6 +26,7 @@ namespace Booking_App_WebApi.Model
         public double Stats { get; set; }
         public List<Payment> Payment { get; set; }
         public FeedBack FeedBack { get; set; }
+        public int? PaymentType { get; set; }
 
     }
     public class FeedBack

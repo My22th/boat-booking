@@ -30,9 +30,24 @@ namespace api_booking_app.Controllers.V1._0
         }
         // GET: api/<OrdersController>
         [HttpGet]
-        public List<Order> FindOrders(int userId)
+        public ActionResult FindOrders()
         {
-            return _bookingService._ordersCollection.Find(x => x.Userid == userId).ToList();
+            var token = Request.Headers["Authorization"].ToString();
+            var user = new BaseClass(_config).GetUserValid(token);
+            if (string.IsNullOrEmpty(user.UserEmail))
+            {
+                return new JsonResult(new
+                {
+                    code = 400,
+                    msg = "Not Authen"
+                });
+            }
+            
+            return new JsonResult(new
+            {
+                code = 200,
+                msg = _bookingService._ordersCollection.Find(x => x.CustomerEmail == user.UserEmail).ToList()
+            });
         }
 
         // GET api/<OrdersController>/5
