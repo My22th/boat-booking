@@ -92,8 +92,8 @@ namespace Booking_App_WebApi.Controllers
             var old = _bookingService._productsCollection.Find(x => x.BoatId == id).FirstOrDefault();
             if (old != null)
             {
-                var filter = Builders<Product>.Filter.Eq(x => x.BoatId, id);
-                var update = Builders<Product>.Update.Set(x => x, product);
+                //var filter = Builders<Product>.Filter.Eq(x => x.BoatId, id);
+                //var update = Builders<Product>.Update.Set(x => x, product);
                 var isss = _bookingService._productsCollection.ReplaceOne(x=>x.BoatId == id, product);
                 return isss.MatchedCount > 0;
             }
