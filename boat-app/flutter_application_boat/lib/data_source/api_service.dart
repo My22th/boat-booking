@@ -14,7 +14,7 @@ class ApiService {
       Dio dio = Dio();
 
       var response = await dio.post("${dotenv.env['API_URL']!}authens",
-          data: '"' + myToken + '"',
+          data: {"token": myToken},
           options: Options(
               headers: {
                 HttpHeaders.contentTypeHeader: "application/json",

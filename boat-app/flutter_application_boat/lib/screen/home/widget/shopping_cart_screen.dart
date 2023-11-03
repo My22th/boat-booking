@@ -6,7 +6,6 @@ import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_boat/models/cart_model.dart';
-import 'package:flutter_application_boat/screen/home/widget/home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -228,8 +227,8 @@ class _ShoppingCart extends State<ShoppingCartPage> {
             },
           );
         } else {
-          uis.clearCart = true;
           if (paytype == 0) {
+            uis.clearCart = true;
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -249,7 +248,15 @@ class _ShoppingCart extends State<ShoppingCartPage> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (contexts) => const HomeScreen()));
           } else {
-            var result = await createOrder(120000);
+            double price = 0;
+
+            uis.cart!.forEach((x) {
+              price += (x.cate.pricePerDay! *
+                  x.todate.difference(x.formdate).inDays)!;
+            });
+
+            var result = await createOrder(2100 * price.toInt());
+            uis.clearCart = true;
             if (result != null) {
               // Navigator.pop(context);
               zpTransToken = result.zptranstoken;

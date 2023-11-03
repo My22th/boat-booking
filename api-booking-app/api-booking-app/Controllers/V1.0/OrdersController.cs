@@ -74,8 +74,12 @@ namespace api_booking_app.Controllers.V1._0
             bool isError = false;
             string message = string.Empty;
             var lstTemp = new List<Order>();
+            var lstIds = new int[] { };
             foreach (var item in value)
             {
+                Random rnd = new Random();
+                int idodrs = rnd.Next(10000,99999);
+                lstIds.Concat(new int[] { idodrs }).ToArray();
                 if (item.Fromdate.AddHours(23) < DateTime.Now)
                 {
                     isError = true;
@@ -111,6 +115,7 @@ namespace api_booking_app.Controllers.V1._0
                 if(lstgetpd.Count>0)
                 lstTemp.Add(new Order
                 {
+                    OrderId=idodrs,
                     BoatId = lstgetpd.First().BoatId,
                     FromDate = item.Fromdate,
                     ToDate = item.Todate,
@@ -136,7 +141,7 @@ namespace api_booking_app.Controllers.V1._0
                 return new JsonResult(new
                 {
                     code = 200,
-                    msg = "Order Success"
+                    msg = lstIds
                 });
             }
         }
