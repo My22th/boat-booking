@@ -205,7 +205,7 @@ class _ShoppingCart extends State<ShoppingCartPage> {
       BuildContext context, Cart uis, String userToken, int paytype) {
     return TextButton(
       onPressed: () async {
-        BookingRes bks = BookingRes(isErr: false, mess: []);
+        BookingRes bks = BookingRes(isErr: false, mess: "");
         await ApiService().booking(uis.cart!, userToken).then((value) {
           bks = value;
         });
@@ -320,7 +320,7 @@ class _ShoppingCart extends State<ShoppingCartPage> {
             }
           }
         }
-        print("OrderRes:${bks.mess}");
+        print("OrderRes:${bks.ids}");
 
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const CheckOutScreen()));

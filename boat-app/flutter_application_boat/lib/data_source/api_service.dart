@@ -91,14 +91,17 @@ class ApiService {
           }, contentType: "application/json", followRedirects: false));
 
       if (response.data["code"] == 200) {
-        return BookingRes(isErr: false, mess: response.data["msg"]);
+        return BookingRes(
+            isErr: false,
+            mess: response.data["msg"],
+            ids: response.data["ids"]);
       } else {
-        return BookingRes(isErr: true, mess: []);
+        return BookingRes(isErr: true, mess: response.data["msg"]);
       }
     } catch (e) {
       print(e.toString());
     }
-    return BookingRes(isErr: true, mess: []);
+    return BookingRes(isErr: true, mess: "Error From Server");
   }
 
   Future<List<Order>> getorders(String userToken) async {

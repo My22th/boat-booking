@@ -142,8 +142,9 @@ namespace api_booking_app.Controllers.V1._0
                 {
                     code = 200,
                     msg = "Success",
-                    ids= lstIds
-                });
+                    ids = lstTemp.Select(x => x.OrderId).ToArray()
+                }); 
+
             }
         }
 

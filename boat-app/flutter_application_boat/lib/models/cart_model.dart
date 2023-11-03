@@ -31,7 +31,7 @@ class BookingRequest {
 
 class BookingRes {
   bool isErr;
-  List<int> mess;
-
-  BookingRes({required this.isErr, required this.mess});
+  String mess;
+  List<dynamic>? ids;
+  BookingRes({required this.isErr, required this.mess, this.ids});
 }
