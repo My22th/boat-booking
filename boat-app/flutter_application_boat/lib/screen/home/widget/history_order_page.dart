@@ -75,7 +75,7 @@ class _HistoryOrder extends State<HistoryOrder> {
           delegate: SliverChildListDelegate(
             [
               AppointmentCard(
-                name: "" + element.boatName!.toString(),
+                name: "123", //+ element.boatName!.toString(),
                 dateTime: "09 Jan 2020, 8am - 10am",
                 padding: 16,
               )

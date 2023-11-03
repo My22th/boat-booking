@@ -112,20 +112,24 @@ namespace api_booking_app.Controllers.V1._0
                     message = "Item " + cate.Name +" form "+item.Fromdate.ToString("dd/MM") +" - "+ item.Todate.ToString("dd/MM") + " Out of stock";
                     break;
                 }
-                if(lstgetpd.Count>0)
-                lstTemp.Add(new Order
+                if (lstgetpd.Count > 0)
                 {
-                    OrderId=idodrs,
-                    BoatId = lstgetpd.First().BoatId,
-                    FromDate = item.Fromdate,
-                    ToDate = item.Todate,
-                    BookingDate = DateTime.Now,
-                    CustomerEmail = user.UserEmail,
-                    CustomerName = user.UserName,
-                    Price = lstgetpd.First().PricePerHour,
-                    
-                });
+                    var itemss = _bookingService._productsCollection.Find(x => x.BoatId == lstgetpd.First().BoatId).FirstOrDefault();
 
+                    lstTemp.Add(new Order
+                    {
+                        BoatName = itemss.Name,
+                        OrderId = idodrs,
+                        BoatId = lstgetpd.First().BoatId,
+                        FromDate = item.Fromdate,
+                        ToDate = item.Todate,
+                        BookingDate = DateTime.Now,
+                        CustomerEmail = user.UserEmail,
+                        CustomerName = user.UserName,
+                        Price = lstgetpd.First().PricePerHour,
+
+                    });
+                }
             }
             if (isError)
             {

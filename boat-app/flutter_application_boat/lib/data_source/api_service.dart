@@ -105,11 +105,11 @@ class ApiService {
   }
 
   Future<List<Order>> getorders(String userToken) async {
+    List<Order> lstors = new List.empty(growable: true);
     try {
       Dio dio = Dio();
-      List<Order> lstors = new List.empty(growable: true);
 
-      var response = await dio.get("${dotenv.env['API_URL']!}orders",
+      var response = await dio.get("${dotenv.env['API_URL']!}orders/findorders",
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: "application/json",
             HttpHeaders.acceptHeader: "*/*",
@@ -122,7 +122,7 @@ class ApiService {
         for (var element in datas) {
           print(element);
           lstors.add(Order(
-            boatId: element['BoatId'],
+            boatId: element['BoatId'] ?? 0,
             bookingDate: element['BookingDate'] == null
                 ? DateTime.now()
                 : element['BookingDate'] as DateTime,
@@ -132,9 +132,9 @@ class ApiService {
             toDate: element['ToDate'] == null
                 ? DateTime.now()
                 : element['ToDate'] as DateTime,
-            price: element['Price'],
-            boatName: element['BoatName'],
-            paymentType: element['PaymentType'],
+            price: element['Price'] ?? 0,
+            boatName: element['BoatName'] ?? "Noname",
+            paymentType: element['PaymentType'] ?? 0,
           ));
           // jsonDecode(element).forEach((json) => {
           //       print(json)
@@ -156,7 +156,7 @@ class ApiService {
     } catch (e) {
       print(e.toString());
     }
-    return List.empty(growable: true);
+    return lstors;
   }
 
   Future<String> changePayment(String userToken, String data) async {

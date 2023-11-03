@@ -299,10 +299,8 @@ class _ShoppingCart extends State<ShoppingCartPage> {
               });
 
               if (response == "Payment Success") {
-                var res = ApiService().changePayment(userToken,
-                    jsonEncode(bks.ids!.map((e) => e.toJson()).toList()));
-
-                print("Change id Success" + res.toString());
+                var res =
+                    ApiService().changePayment(userToken, jsonEncode(bks.ids));
               } else {
                 showDialog(
                   context: context,
