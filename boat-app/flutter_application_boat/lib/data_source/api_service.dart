@@ -158,4 +158,29 @@ class ApiService {
     }
     return List.empty(growable: true);
   }
+
+  Future<String> changePayment(String userToken, String data) async {
+    try {
+      Dio dio = Dio();
+
+      var response = await dio.put("${dotenv.env['API_URL']!}orders",
+          data: data,
+          options: Options(headers: {
+            HttpHeaders.contentTypeHeader: "application/json",
+            HttpHeaders.acceptHeader: "*/*",
+            HttpHeaders.authorizationHeader: userToken
+          }, contentType: "application/json", followRedirects: false));
+
+      if (response.data["code"] == 200) {
+        var mess = response.data["msg"];
+
+        return mess;
+      } else {
+        return "Error From server";
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return "Error From server";
+  }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:confirm_dialog/confirm_dialog.dart';
@@ -298,6 +299,10 @@ class _ShoppingCart extends State<ShoppingCartPage> {
               });
 
               if (response == "Payment Success") {
+                var res = ApiService().changePayment(userToken,
+                    jsonEncode(bks.ids!.map((e) => e.toJson()).toList()));
+
+                print("Change id Success" + res.toString());
               } else {
                 showDialog(
                   context: context,
