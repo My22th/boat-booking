@@ -31,7 +31,7 @@ class BookingRequest {
 
 class BookingRes {
   bool isErr;
-  String mess;
+  List<int> mess;
 
   BookingRes({required this.isErr, required this.mess});
 }

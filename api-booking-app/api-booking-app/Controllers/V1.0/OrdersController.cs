@@ -141,7 +141,8 @@ namespace api_booking_app.Controllers.V1._0
                 return new JsonResult(new
                 {
                     code = 200,
-                    msg = lstIds
+                    msg = "Success",
+                    ids= lstIds
                 });
             }
         }
@@ -149,14 +150,21 @@ namespace api_booking_app.Controllers.V1._0
         [HttpPut]
         public ActionResult UpdatePayment([FromBody] int[] value)
         {
+            var token = Request.Headers["Authorization"].ToString();
+            var user = new BaseClass(_config).GetUserValid(token);
+            if (string.IsNullOrEmpty(user.UserEmail))
+            {
+                return new JsonResult(new
+                {
+                    code = 400,
+                    msg = "Not Authen"
+                });
+            }
             foreach (var item in value)
             {
                 var data = _bookingService._ordersCollection.Find(x => x.OrderId == item).FirstOrDefault();
                 data.PaymentType = 1;
-                var filter = Builders<Order>.Filter.Eq(x => x.OrderId, item);
-                var update = Builders<Order>.Update.Set(x => x, data);
                 var isss = _bookingService._ordersCollection.ReplaceOne(x => x.OrderId == item, data);
-
             }
             return new JsonResult(new
             {
