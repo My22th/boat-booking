@@ -54,6 +54,7 @@ class _HistoryOrder extends State<HistoryOrder> {
   }
 
   List<Widget> _renderItem(List<Order> data) {
+    data = data.reversed.toList();
     List<Widget> widgets = List.empty(growable: true);
     for (var element in data) {
       widgets.addAll(<Widget>[
@@ -62,8 +63,12 @@ class _HistoryOrder extends State<HistoryOrder> {
             padding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
             child: Text(
               DateFormat("dd/MM/yyyy")
-                  .format(element.bookingDate ?? DateTime.now())
-                  .toString(),
+                      .format(element.bookingDate ?? DateTime.now())
+                      .toString() +
+                  " - " +
+                  (element.paymentType == 1
+                      ? "Pay with: ZaloPay"
+                      : "Pay with: Cash"),
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -75,8 +80,11 @@ class _HistoryOrder extends State<HistoryOrder> {
           delegate: SliverChildListDelegate(
             [
               AppointmentCard(
-                name: "123", //+ element.boatName!.toString(),
-                dateTime: "09 Jan 2020, 8am - 10am",
+                name: element.boatName!.toString(),
+                Payname: element.paymentType == 1 ? "ZaloPay" : "Cash",
+                Price: element.price.toString(),
+                dateTime:
+                    "${DateFormat("dd/MM/yyyy").format(element.fromDate!)} - ${DateFormat("dd/MM/yyyy").format(element.toDate!)}",
                 padding: 16,
               )
             ],

@@ -120,22 +120,23 @@ class ApiService {
         var datas = response.data["msg"] as List<dynamic>;
 
         for (var element in datas) {
-          print(element);
+          // print(element);
           lstors.add(Order(
-            boatId: element['BoatId'] ?? 0,
-            bookingDate: element['BookingDate'] == null
+            boatId: element['boatId'] ?? 0,
+            bookingDate: element['bookingDate'] == null
                 ? DateTime.now()
-                : element['BookingDate'] as DateTime,
-            fromDate: element['FromDate'] == null
+                : DateTime.parse(element['bookingDate']),
+            fromDate: element['fromDate'] == null
                 ? DateTime.now()
-                : element['FromDate'] as DateTime,
-            toDate: element['ToDate'] == null
+                : DateTime.parse(element['fromDate']),
+            toDate: element['toDate'] == null
                 ? DateTime.now()
-                : element['ToDate'] as DateTime,
-            price: element['Price'] ?? 0,
-            boatName: element['BoatName'] ?? "Noname",
-            paymentType: element['PaymentType'] ?? 0,
+                : DateTime.parse(element['toDate']),
+            price: double.parse(element['price'].toString()),
+            boatName: element['boatName'] ?? "Noname",
+            paymentType: element['paymentType'] ?? 0,
           ));
+
           // jsonDecode(element).forEach((json) => {
           //       print(json)
           //       // lstors.add(Order(

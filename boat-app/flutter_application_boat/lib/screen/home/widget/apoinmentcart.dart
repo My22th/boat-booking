@@ -4,6 +4,8 @@ class AppointmentCard extends StatelessWidget {
   final double padding;
   final bool isActive;
   final String name;
+  final String Payname;
+  final String Price;
   final String dateTime;
 
   const AppointmentCard(
@@ -11,7 +13,9 @@ class AppointmentCard extends StatelessWidget {
       required this.padding,
       this.isActive = false,
       required this.name,
-      required this.dateTime})
+      required this.dateTime,
+      required this.Payname,
+      required this.Price})
       : super(key: key);
 
   @override
@@ -70,6 +74,12 @@ class AppointmentCard extends StatelessWidget {
                     ),
                     Text(
                       dateTime,
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      "Total Price: " + Price + "\$",
                       style: TextStyle(
                         color: Colors.grey,
                       ),

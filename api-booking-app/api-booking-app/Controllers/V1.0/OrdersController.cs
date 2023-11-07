@@ -126,7 +126,7 @@ namespace api_booking_app.Controllers.V1._0
                         BookingDate = DateTime.Now,
                         CustomerEmail = user.UserEmail,
                         CustomerName = user.UserName,
-                        Price = lstgetpd.First().PricePerHour,
+                        Price = lstgetpd.First().PricePerHour * decimal.Parse((item.Todate - item.Fromdate).TotalDays.ToString()),
 
                     });
                 }
