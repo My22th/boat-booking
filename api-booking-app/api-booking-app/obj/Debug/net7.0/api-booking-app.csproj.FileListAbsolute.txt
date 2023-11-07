@@ -756,3 +756,5 @@ C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\obj\
 C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\api-booking-app.pdb
 C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\api-booking-app.genruntimeconfig.cache
 C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\obj\Debug\net7.0\ref\api-booking-app.dll
+C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\longl\Desktop\booking\boat-booking\api-booking-app\api-booking-app\bin\Debug\net7.0\StackExchange.Redis.dll

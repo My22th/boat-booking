@@ -1,5 +1,6 @@
 ﻿using Booking_App_WebApi.Model;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -50,6 +51,26 @@ namespace api_booking_app.Utils
                 return new User();
             }
             return user;
+        }
+    }
+
+    public class ConnectionHelper
+    {
+        private readonly IConfiguration _config;
+
+        static ConnectionHelper()
+        {
+            ConnectionHelper.lazyConnection = new Lazy<ConnectionMultiplexer>(() => {
+                return ConnectionMultiplexer.Connect("jinnie.shop:6379,password=000000Long");
+            });
+        }
+        private static Lazy<ConnectionMultiplexer> lazyConnection;
+        public static ConnectionMultiplexer Connection
+        {
+            get
+            {
+                return lazyConnection.Value;
+            }
         }
     }
 }

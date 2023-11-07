@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Booking_App_WebApi.Model;
 using api_booking_app.Model;
+using api_booking_app.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +22,12 @@ namespace Booking_App_WebApi.Controllers
     public class AuthensController : ControllerBase
     {
         private IConfiguration _config;
+        private ICacheService _cacheService;
 
-        public AuthensController(IConfiguration config)
+        public AuthensController(IConfiguration config,ICacheService cacheService)
         {
             _config = config;
+            _cacheService = cacheService;
         }
 
 
@@ -32,7 +35,11 @@ namespace Booking_App_WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> GenerateJSONWebTokenAsync([FromBody] TokenAuthenRequest _token)
         {
-
+            var rs = _cacheService.GetData<string>("_token" + _token);
+            if (rs != null)
+            {
+                return Ok(rs);
+            }
             var customToken = FirebaseApp.DefaultInstance;
             var dataget =  FirebaseAuth.GetAuth(customToken).VerifyIdTokenAsync(_token.Token.ToString());
             string uid = dataget.Result.Uid;
@@ -57,8 +64,10 @@ namespace Booking_App_WebApi.Controllers
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(102),
                 signingCredentials: signIn);
+            var tk = new JwtSecurityTokenHandler().WriteToken(token);
+            var b = _cacheService.SetData("_token" + _token, tk, DateTimeOffset.Now.AddMinutes(100));
 
-            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+            return Ok(tk);
         }
         
 
