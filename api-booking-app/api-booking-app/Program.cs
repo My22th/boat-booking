@@ -1,5 +1,6 @@
 
 using api_booking_app.Controllers.V1._0;
+using api_booking_app.Utils;
 using Booking_App_WebApi.Controllers;
 using Booking_App_WebApi.Model.MongoDBFD;
 using FirebaseAdmin;
@@ -49,6 +50,7 @@ if (FirebaseApp.DefaultInstance == null)
 
 builder.Services.AddHostedService<RabitMQConsumer>();
 builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddSingleton<BookingService>();
