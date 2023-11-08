@@ -403,48 +403,26 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             ),
           ),
           onPressed: () {
-            if (ui.cart!.any((s) =>
-                s.cate.categoryId == widget.cate!.categoryId &&
-                (s.formdate == fromdate && s.todate == todate))) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: const TitleText(
-                        text: "You adrealy add item!", fontSize: 20),
-                    actions: [
-                      TextButton(
-                        child: const Text("OK"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              CartModel cartit = CartModel(
-                  cate: widget.cate!, formdate: fromdate, todate: todate);
-              ui.addToCart = cartit;
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: const TitleText(
-                        text: "Add item to cart success!", fontSize: 20),
-                    actions: [
-                      TextButton(
-                        child: const Text("OK"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
+            CartModel cartit = CartModel(
+                cate: widget.cate!, formdate: fromdate, todate: todate);
+            ui.addToCart = cartit;
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const TitleText(
+                      text: "Add item to cart success!", fontSize: 20),
+                  actions: [
+                    TextButton(
+                      child: const Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           },
           backgroundColor: const Color.fromRGBO(230, 88, 41, 1),
           icon: Icon(Icons.shopping_basket,

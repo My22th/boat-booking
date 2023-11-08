@@ -11,6 +11,7 @@ import '../../themes/light_color.dart';
 import '../../themes/theme.dart';
 import 'widget/history_order_page.dart';
 import 'widget/home_page.dart';
+import 'widget/info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -164,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? HistoryOrder()
                                     : const Align(
                                         alignment: Alignment.topCenter,
-                                        child: null,
+                                        child: BodyProfile(),
                                       ),
                       ),
                     )
