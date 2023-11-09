@@ -30,7 +30,7 @@ namespace api_booking_app.Controllers.V1._0
         }
         // GET: api/<OrdersController>
         [HttpGet("FindOrders")]
-        public ActionResult FindOrders(string email)
+        public ActionResult FindOrders(string? email)
         {
             //var token = Request.Headers["Authorization"].ToString();
             //var user = new BaseClass(_config).GetUserValid(token);
@@ -42,7 +42,15 @@ namespace api_booking_app.Controllers.V1._0
             //        msg = "Not Authen"
             //    });
             //}
-            
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return new JsonResult(new
+                {
+                    code = 200,
+                    msg = _bookingService._ordersCollection.Find(x =>true).ToList()
+                });
+
+            }
             return new JsonResult(new
             {
                 code = 200,
