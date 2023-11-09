@@ -30,23 +30,23 @@ namespace api_booking_app.Controllers.V1._0
         }
         // GET: api/<OrdersController>
         [HttpGet("FindOrders")]
-        public ActionResult FindOrders()
+        public ActionResult FindOrders(string email)
         {
-            var token = Request.Headers["Authorization"].ToString();
-            var user = new BaseClass(_config).GetUserValid(token);
-            if (string.IsNullOrEmpty(user.UserEmail))
-            {
-                return new JsonResult(new
-                {
-                    code = 400,
-                    msg = "Not Authen"
-                });
-            }
+            //var token = Request.Headers["Authorization"].ToString();
+            //var user = new BaseClass(_config).GetUserValid(token);
+            //if (string.IsNullOrEmpty(user.UserEmail))
+            //{
+            //    return new JsonResult(new
+            //    {
+            //        code = 400,
+            //        msg = "Not Authen"
+            //    });
+            //}
             
             return new JsonResult(new
             {
                 code = 200,
-                msg = _bookingService._ordersCollection.Find(x => x.CustomerEmail == user.UserEmail).ToList()
+                msg = _bookingService._ordersCollection.Find(x => x.CustomerEmail == email).ToList()
             });
         }
 
