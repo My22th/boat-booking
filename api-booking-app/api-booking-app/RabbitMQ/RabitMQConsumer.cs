@@ -30,6 +30,7 @@ namespace In_Anh.RabitMQ
         private IConnection connection = null;
         private void Run()
         {
+
             var factory = new ConnectionFactory()
             {
                 HostName = "jinnie.shop",
